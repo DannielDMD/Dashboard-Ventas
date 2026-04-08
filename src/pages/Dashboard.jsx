@@ -67,7 +67,7 @@ const Dashboard = () => {
                         </div>
                     </div>
                     <div className="bg-white p-10 rounded-[2.5rem] border border-slate-200 shadow-[0_20px_50px_-20px_rgba(0,0,0,0.05)]">
-                        <CardGroup totals={globalTotals} />
+                        <CardGroup totals={globalTotals} title="Consolidado Colombia" />
                     </div>
                 </section>
 
@@ -82,7 +82,7 @@ const Dashboard = () => {
                         <div className="flex items-center justify-between mb-2">
                             <h4 className="text-xl font-bold text-slate-800 uppercase tracking-tight">Consolidado Bogotá (G1 + G2)</h4>
                         </div>
-                        <CardGroup totals={bogotaCombinedTotals} />
+                        <CardGroup totals={bogotaCombinedTotals} title="Consolidado Bogotá (G1 + G2)" />
                     </div>
                 </section>
 
@@ -104,5 +104,7 @@ const Dashboard = () => {
 
     );
 };
+
+
 
 export default Dashboard;
