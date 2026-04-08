@@ -14,10 +14,23 @@ const Dashboard = () => {
     }, []);
 
     // 2. Totales Combinados de Bogotá (Grupo 1 + Grupo 2)
-    const bogotaCombinedTotals = useMemo(() => {
-        const sectionsBogota = dashboardData.filter(s => s.id === 'g1' || s.id === 'g2');
-        const rowsBogota = sectionsBogota.flatMap(s => s.ubicaciones.flatMap(u => u.filas));
-        return calculateTotals(rowsBogota);
+    const { bogotaCombinedTotals, bogotaComparisonData } = useMemo(() => {
+        const sectionG1 = dashboardData.find(s => s.id === 'g1');
+        const sectionG2 = dashboardData.find(s => s.id === 'g2');
+        
+        const rowsG1 = sectionG1.ubicaciones.flatMap(u => u.filas);
+        const rowsG2 = sectionG2.ubicaciones.flatMap(u => u.filas);
+        
+        const totG1 = calculateTotals(rowsG1);
+        const totG2 = calculateTotals(rowsG2);
+        
+        return {
+            bogotaCombinedTotals: calculateTotals([...rowsG1, ...rowsG2]),
+            bogotaComparisonData: [
+                { ...totG1, name: 'Grupo 1' },
+                { ...totG2, name: 'Grupo 2' }
+            ]
+        };
     }, []);
 
     return (
@@ -82,7 +95,7 @@ const Dashboard = () => {
                         <div className="flex items-center justify-between mb-2">
                             <h4 className="text-xl font-bold text-slate-800 uppercase tracking-tight">Consolidado Bogotá (G1 + G2)</h4>
                         </div>
-                        <CardGroup totals={bogotaCombinedTotals} title="Consolidado Bogotá (G1 + G2)" />
+                        <CardGroup totals={bogotaCombinedTotals} comparisonData={bogotaComparisonData} title="Consolidado Bogotá (G1 + G2)" />
                     </div>
                 </section>
 

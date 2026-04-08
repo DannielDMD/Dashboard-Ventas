@@ -15,6 +15,13 @@ const TableSection = ({ sectionData, showSummary = true }) => {
 
   const sectionTotals = useMemo(() => calculateTotals(allRowsInSection), [allRowsInSection]);
 
+  const sectionComparisonData = useMemo(() => {
+    return ubicaciones.map(u => ({
+        ...calculateTotals(u.filas),
+        name: u.nombre
+    }));
+  }, [ubicaciones]);
+
   return (
     <div className="mb-14 p-6 md:p-10 bg-white/40 rounded-3xl border border-gray-200/50 shadow-sm">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
@@ -58,6 +65,15 @@ const TableSection = ({ sectionData, showSummary = true }) => {
       <div className="space-y-6">
         {ubicaciones.map((u, i) => {
             const locTotals = calculateTotals(u.filas);
+            
+            // Datos comparativos: Agencias vs Directos
+            const agenciasRows = u.filas.filter(r => r.tipo === 'Agencias');
+            const directosRows = u.filas.filter(r => r.tipo === 'Directos');
+            const compData = [
+                { ...calculateTotals(agenciasRows), name: 'Agencias' },
+                { ...calculateTotals(directosRows), name: 'Directos' }
+            ];
+
             return viewMode === 'table' ? (
                 <Table 
                     key={i} 
@@ -68,7 +84,7 @@ const TableSection = ({ sectionData, showSummary = true }) => {
             ) : (
                 <ChartView 
                     key={i} 
-                    totals={locTotals} 
+                    comparisonData={compData} 
                     title={u.nombre} 
                 />
             );
@@ -82,7 +98,7 @@ const TableSection = ({ sectionData, showSummary = true }) => {
                 <h4 className="text-sm font-bold text-blue-600 uppercase tracking-[0.2em]">Resumen de Sección</h4>
                 <span className="text-xs font-medium text-gray-400">{nombre} Total</span>
             </div>
-            <CardGroup totals={sectionTotals} title={`${nombre} Total`} />
+            <CardGroup totals={sectionTotals} comparisonData={sectionComparisonData} title={`${nombre} Total`} />
         </div>
       )}
     </div>

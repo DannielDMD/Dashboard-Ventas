@@ -39,7 +39,7 @@ const Table = ({ rows, totals, title }) => {
                       {row.tipo}
                     </span>
                   </td>
-                  <td className="px-5 py-3.5 text-right font-mono">{row.meta}</td>
+                  <td className="px-5 py-3.5 text-right font-mono">{row.meta.toLocaleString('es-CO')}</td>
                   <td className="px-5 py-3.5 text-right font-mono">{row.ventasAdicionales}</td>
                   <td className="px-5 py-3.5 text-right font-mono">{row.ventasSinAdicionales}</td>
                   <td className="px-5 py-3.5 text-right font-mono">{row.servicios}</td>

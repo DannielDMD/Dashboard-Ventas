@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import Card from './Card';
 import ChartView from './ChartView';
 
-const CardGroup = ({ totals, title = "Resumen de Métricas" }) => {
+const CardGroup = ({ totals, comparisonData, title = "Resumen de Métricas" }) => {
   const [viewMode, setViewMode] = useState('cards'); // 'cards' | 'charts'
 
   if (!totals) return null;
@@ -62,7 +62,7 @@ const CardGroup = ({ totals, title = "Resumen de Métricas" }) => {
         </div>
       ) : (
         <div className="bg-slate-50/50 rounded-3xl p-1 border border-slate-100">
-          <ChartView totals={totals} title={title} />
+          <ChartView totals={totals} comparisonData={comparisonData} title={title} />
         </div>
       )}
     </div>
