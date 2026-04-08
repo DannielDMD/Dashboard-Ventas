@@ -19,10 +19,10 @@ const Table = ({ rows, totals, title }) => {
               <th className="px-5 py-4 font-semibold text-right">% Inst</th>
               <th className="px-5 py-4 font-semibold text-right">Pend</th>
               <th className="px-5 py-4 font-semibold text-right text-blue-600">Avance</th>
-              <th className="px-5 py-4 font-semibold text-center">T1</th>
-              <th className="px-5 py-4 font-semibold text-center">T2</th>
-              <th className="px-5 py-4 font-semibold text-center">T3</th>
-              <th className="px-5 py-4 font-semibold text-center">T4</th>
+              <th className="px-5 py-4 font-semibold text-center">Oportunidad </th>
+              <th className="px-5 py-4 font-semibold text-center">Porcentaje Oportunidad</th>
+              <th className="px-5 py-4 font-semibold text-center">Digital</th>
+              <th className="px-5 py-4 font-semibold text-center">Porcentaje Digital</th>
               <th className="px-5 py-4 font-semibold text-right">Desc</th>
             </tr>
           </thead>

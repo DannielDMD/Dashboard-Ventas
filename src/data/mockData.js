@@ -59,10 +59,10 @@ export const dashboardData = [
       {
         nombre: "Chia",
         filas: [
-          { id: "ch-ag", ubicacion: "Chia", tipo: "Agencias", meta: 300, ventasAdicionales: 30, ventasSinAdicionales: 270, servicios: 20, instalado: 220, pendiente: 50, tipoOportunidad1: 6, tipoOportunidad2: 16, tipoOportunidad3: 4, tipoOportunidad4: 1, descartado: 6, instaladoAdiciones: 25, pendienteAdiciones: 5 },
-          { id: "ch-dir", ubicacion: "Chia", tipo: "Directos", meta: 0, ventasAdicionales: 0, ventasSinAdicionales: 0, servicios: 0, instalado: 0, pendiente: 0, tipoOportunidad1: 0, tipoOportunidad2: 0, tipoOportunidad3: 0, tipoOportunidad4: 0, descartado: 0, instaladoAdiciones: 0, pendienteAdiciones: 0 }
+          { id: "ch-ag", ubicacion: "Chia", tipo: "Agencias", meta: 500, ventasAdicionales: 90, ventasSinAdicionales: 270, servicios: 20, instalado: 220, pendiente: 50, tipoOportunidad1: 6, tipoOportunidad2: 16, tipoOportunidad3: 4, tipoOportunidad4: 1, descartado: 6, instaladoAdiciones: 25, pendienteAdiciones: 5 },
+          { id: "ch-dir", ubicacion: "Chia", tipo: "Directos", meta: 0, ventasAdicionales: 10, ventasSinAdicionales: 0, servicios: 0, instalado: 0, pendiente: 0, tipoOportunidad1: 0, tipoOportunidad2: 0, tipoOportunidad3: 0, tipoOportunidad4: 0, descartado: 0, instaladoAdiciones: 0, pendienteAdiciones: 0 }
         ]
-      }
+      },
 
     ]
 

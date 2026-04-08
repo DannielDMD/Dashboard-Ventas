@@ -67,7 +67,7 @@ const Dashboard = () => {
                         </div>
                     </div>
                     <div className="bg-white p-10 rounded-[2.5rem] border border-slate-200 shadow-[0_20px_50px_-20px_rgba(0,0,0,0.05)]">
-                        <CardGroup totals={globalTotals} fullVersion={true} />
+                        <CardGroup totals={globalTotals} />
                     </div>
                 </section>
 
@@ -94,11 +94,14 @@ const Dashboard = () => {
                 </section>
 
             </main>
-
+            {/*
             <footer className="max-w-[1500px] mx-auto px-8 py-12 border-t border-slate-200 text-center">
                 <p className="text-slate-400 text-sm font-medium italic">Dashboard 4D - Optimizado para lectura de datos rápida y escalable.</p>
             </footer>
+            */}
         </div>
+
+
     );
 };
 
