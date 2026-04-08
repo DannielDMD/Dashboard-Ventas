@@ -17,13 +17,13 @@ const Dashboard = () => {
     const { bogotaCombinedTotals, bogotaComparisonData } = useMemo(() => {
         const sectionG1 = dashboardData.find(s => s.id === 'g1');
         const sectionG2 = dashboardData.find(s => s.id === 'g2');
-        
+
         const rowsG1 = sectionG1.ubicaciones.flatMap(u => u.filas);
         const rowsG2 = sectionG2.ubicaciones.flatMap(u => u.filas);
-        
+
         const totG1 = calculateTotals(rowsG1);
         const totG2 = calculateTotals(rowsG2);
-        
+
         return {
             bogotaCombinedTotals: calculateTotals([...rowsG1, ...rowsG2]),
             bogotaComparisonData: [
@@ -72,35 +72,22 @@ const Dashboard = () => {
             <main className="max-w-[1500px] mx-auto px-8 py-12">
 
                 {/* SECCIÓN 1: GENERAL COLOMBIA */}
-                <section className="mb-20">
-                    <div className="flex items-end justify-between mb-8">
-                        <div>
-                            <h2 className="text-4xl font-black text-slate-900 tracking-tight">General Colombia</h2>
-                            <p className="text-slate-500 font-medium mt-1 uppercase tracking-widest text-xs">Métricas acumuladas a nivel país</p>
-                        </div>
-                    </div>
-                    <div className="bg-white p-10 rounded-[2.5rem] border border-slate-200 shadow-[0_20px_50px_-20px_rgba(0,0,0,0.05)]">
-                        <CardGroup totals={globalTotals} title="Consolidado Colombia" />
-                    </div>
+                <section className="mb-10">
+                    <CardGroup totals={globalTotals} title="General Colombia" />
                 </section>
 
                 {/* SECCIÓN BOGOTÁ (Consolida G1 y G2) */}
-                <section className="mb-20 space-y-8">
+                <section className="mb-10 space-y-4">
                     {dashboardData.filter(s => s.id === 'g1' || s.id === 'g2').map((section) => (
                         <TableSection key={section.id} sectionData={section} showSummary={false} />
                     ))}
 
                     {/* Resumen Único de Bogotá */}
-                    <div className="p-10 bg-slate-100 rounded-[2.5rem] border border-slate-200 shadow-inner mt-12">
-                        <div className="flex items-center justify-between mb-2">
-                            <h4 className="text-xl font-bold text-slate-800 uppercase tracking-tight">Consolidado Bogotá (G1 + G2)</h4>
-                        </div>
-                        <CardGroup totals={bogotaCombinedTotals} comparisonData={bogotaComparisonData} title="Consolidado Bogotá (G1 + G2)" />
-                    </div>
+                    <CardGroup totals={bogotaCombinedTotals} comparisonData={bogotaComparisonData} title="Consolidado Bogotá (G1 + G2)" />
                 </section>
 
                 {/* SECCIÓN DINÁMICA (MEDELLÍN, REGIONALES, ETC.) */}
-                <section className="space-y-20">
+                <section className="space-y-10">
                     {dashboardData.filter(s => s.id !== 'g1' && s.id !== 'g2').map((section) => (
                         <TableSection key={section.id} sectionData={section} />
                     ))}

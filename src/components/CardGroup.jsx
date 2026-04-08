@@ -1,67 +1,109 @@
-//import React from 'react';
-//import Card from './Card';
-
 import React, { useState } from 'react';
 import Card from './Card';
 import ChartView from './ChartView';
+import ViewSelector from './ViewSelector';
+import { calcPercentage } from '../utils/calculations';
 
 const CardGroup = ({ totals, comparisonData, title = "Resumen de Métricas" }) => {
-  const [viewMode, setViewMode] = useState('cards'); // 'cards' | 'charts'
+  const [viewMode, setViewMode] = useState('cards');
 
   if (!totals) return null;
 
-  const cardData = [
-    { label: "Meta", value: totals.meta },
-    { label: "Servicios", value: totals.servicios },
-    { label: "Venta con Adicionales", value: totals.ventasAdicionales },
-    { label: "Instalado con Adicionales", value: totals.instaladoAdiciones },
-    { label: "Pendiente con Adicionales", value: totals.pendienteAdiciones },
-    { label: "% Instalación", value: totals.porcentajeInstalado },
-    { label: "Instalado sin Adicionales", value: totals.instalado },
-    { label: "Pendiente sin Adicionales", value: totals.pendiente },
-    { label: "Ventas sin Adicionales", value: totals.ventasSinAdicionales },
-    { label: "Descartado", value: totals.descartado }
+  const selectorOptions = [
+    { label: 'Tarjetas', value: 'cards' },
+    { label: 'Gráficas', value: 'charts' }
   ];
 
+  const renderMetricSection = (sectionTitle, data, isSinAdiciones = false) => (
+    <div className="space-y-2">
+      <h5 className="text-xs font-bold text-slate-500 uppercase tracking-widest pl-2 border-l-2 border-blue-500 ml-1">
+        {sectionTitle}
+      </h5>
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-1">
+        <Card label="Cantidad" value={data.servicios} />
+        <Card label="Venta" value={data.venta} type="ventas" />
+
+        <Card 
+            label="Instalado" 
+            value={data.instalado} 
+            type="instalado" 
+            percentageValue={calcPercentage(data.instalado, totals.meta)} 
+        />
+
+        <Card 
+            label="Pendiente" 
+            value={data.pendiente} 
+            type="pendiente" 
+            percentageValue={calcPercentage(data.pendiente, totals.meta)} 
+        />
+
+        <Card 
+            label="Descartado" 
+            value={isSinAdiciones ? totals.descartado : totals.descartadoAdiciones} 
+            type="descartado" 
+            percentageValue={calcPercentage(isSinAdiciones ? totals.descartado : totals.descartadoAdiciones, totals.meta)} 
+        />
+
+        <Card 
+            label="Oportunidad" 
+            value={totals.oportunidad} 
+            type="oportunidad" 
+            percentageValue={calcPercentage(totals.oportunidad, totals.meta)} 
+        />
+
+        <Card 
+            label="Digital" 
+            value={totals.digital} 
+            type="digital" 
+            percentageValue={calcPercentage(totals.digital, totals.meta)} 
+        />
+      </div>
+    </div>
+  );
+
   return (
-    <div className="space-y-6">
-      <div className="flex justify-end mb-4">
-        <div className="flex bg-slate-200/50 p-1 rounded-xl border border-slate-300/30 backdrop-blur-sm">
-          <button
-            onClick={() => setViewMode('cards')}
-            className={`flex items-center gap-2 px-4 py-1.5 rounded-lg text-xs font-bold transition-all duration-300 ${viewMode === 'cards'
-              ? 'bg-white text-blue-600 shadow-sm'
-              : 'text-slate-500 hover:text-slate-800'
-              }`}
-          >
-            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-            </svg>
-            Tarjetas
-          </button>
-          <button
-            onClick={() => setViewMode('charts')}
-            className={`flex items-center gap-2 px-4 py-1.5 rounded-lg text-xs font-bold transition-all duration-300 ${viewMode === 'charts'
-              ? 'bg-white text-blue-600 shadow-sm'
-              : 'text-slate-500 hover:text-slate-800'
-              }`}
-          >
-            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-            </svg>
-            Gráficas
-          </button>
+    <div className="bg-white rounded-[1.5rem] p-4 border border-slate-200 shadow-[0_10px_30px_-15px_rgba(0,0,0,0.05)] space-y-4">
+      {/* Header Interno Compacto */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-slate-100 pb-3">
+        <div>
+          <h3 className="text-lg font-black text-slate-900 tracking-tight">{title}</h3>
+          <p className="text-slate-400 text-[9px] font-bold uppercase tracking-widest mt-0.5">Control de Rendimiento</p>
         </div>
+
+        <ViewSelector 
+          options={selectorOptions} 
+          activeValue={viewMode} 
+          onChange={setViewMode} 
+        />
       </div>
 
       {viewMode === 'cards' ? (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-          {cardData.map((item, index) => (
-            <Card key={index} label={item.label} value={item.value} />
-          ))}
+        <div className="space-y-6">
+          {/* Tarjeta de Meta Única Compacta */}
+          <div className="flex justify-start">
+            <div className="w-32">
+              <Card label="Meta General" value={totals.meta} type="meta" />
+            </div>
+          </div>
+
+          {/* Sección Con Adicionales */}
+          {renderMetricSection("Con Adicionales", {
+            servicios: totals.servicios,
+            venta: totals.ventasAdicionales,
+            instalado: totals.instaladoAdiciones,
+            pendiente: totals.pendienteAdiciones
+          }, false)}
+
+          {/* Sección Sin Adicionales */}
+          {renderMetricSection("Sin Adicionales", {
+            servicios: totals.servicios,
+            venta: totals.ventasSinAdicionales,
+            instalado: totals.instalado,
+            pendiente: totals.pendiente
+          }, true)}
         </div>
       ) : (
-        <div className="bg-slate-50/50 rounded-3xl p-1 border border-slate-100">
+        <div className="bg-slate-50/50 rounded-xl p-1 border border-slate-100">
           <ChartView totals={totals} comparisonData={comparisonData} title={title} />
         </div>
       )}

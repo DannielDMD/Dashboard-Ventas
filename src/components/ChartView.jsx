@@ -26,12 +26,8 @@ const COMPARISON_COLORS = {
 };
 
 const ChartView = ({ totals, comparisonData, title }) => {
-  // if comparisonData is present, we use it for comparative charts.
-  // otherwise we use totals for summary charts.
-  
   const isComparative = comparisonData && comparisonData.length > 0;
   const currentTotals = totals || (isComparative ? comparisonData.reduce((acc, curr) => {
-    // combine all into a summary for the donut and misc charts
     Object.keys(curr).forEach(key => {
         if (typeof curr[key] === 'number') acc[key] = (acc[key] || 0) + curr[key];
     });
@@ -40,11 +36,8 @@ const ChartView = ({ totals, comparisonData, title }) => {
 
   if (!currentTotals && !isComparative) return null;
 
-  // Chart 1: Sales / Meta Comparison
   let barData = [];
   if (isComparative) {
-    // Comparison by group/type/location
-    // Metrics: Meta, Ventas (Sin Adic), Ventas (Con Adic)
     barData = comparisonData.map(d => ({
         name: d.name,
         Meta: d.meta,
@@ -56,89 +49,82 @@ const ChartView = ({ totals, comparisonData, title }) => {
     }));
   } else {
     barData = [{
-        name: 'General',
+        name: 'Gral',
         Meta: currentTotals.meta,
-        'V. con Adic.': currentTotals.ventasAdicionales,
-        'V. sin Adic.': currentTotals.ventasSinAdicionales,
         Instalado: currentTotals.instalado,
-        Pendiente: currentTotals.pendiente
+        Pendiente: currentTotals.pendiente,
+        Ventas: currentTotals.ventasAdicionales + currentTotals.ventasSinAdicionales
     }];
   }
 
-  // Chart 2: Execution Efficiency (Pie)
   const pieData = [
     { name: 'Instalado', value: currentTotals.instalado },
     { name: 'Pendiente', value: currentTotals.pendiente },
   ];
 
-  // Chart 3: Opportunities (Aggregated)
   const opportunityData = [
-    { name: 'T1', value: currentTotals.tipoOportunidad1 },
-    { name: 'T2', value: currentTotals.tipoOportunidad2 },
-    { name: 'T3', value: currentTotals.tipoOportunidad3 },
-    { name: 'T4', value: currentTotals.tipoOportunidad4 },
+    { name: 'Oport', value: currentTotals.oportunidad },
+    { name: 'Digital', value: currentTotals.digital },
   ];
 
   return (
-    <div className="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm mb-6">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-10">
+    <div className="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm transition-all duration-300">
+      {/* Header Compacto */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-4 border-b border-slate-50 pb-3">
         <div>
-          <h4 className="text-xl font-black text-slate-800 flex items-center gap-2">
-            <span className="w-3 h-3 bg-blue-600 rounded-full"></span>
-            {title}
+          <h4 className="text-sm font-black text-slate-800 flex items-center gap-1.5 uppercase tracking-tight">
+            <span className="w-2 h-2 bg-blue-600 rounded-full"></span>
+            Charts: {title}
           </h4>
-          <p className="text-slate-400 text-xs font-bold uppercase tracking-widest mt-1 ml-5">
-            {isComparative ? 'Análisis Comparativo' : 'Resumen Estadístico'}
-          </p>
         </div>
-        {currentTotals.porcentajeInstalado && (
-          <div className="bg-emerald-50 px-6 py-2.5 rounded-2xl border border-emerald-100/50 flex flex-col items-center">
-            <span className="text-[10px] font-black text-emerald-500 uppercase tracking-widest leading-none mb-1">Eficiencia Global</span>
-            <span className="text-2xl font-black text-emerald-700 leading-none">{currentTotals.porcentajeInstalado}</span>
+        {currentTotals.porcInstaladoSinAdic && (
+          <div className="bg-emerald-50 px-3 py-1 rounded-lg border border-emerald-100/50 flex gap-2 items-center">
+            <span className="text-[8px] font-black text-emerald-500 uppercase tracking-widest leading-none">Eficiencia</span>
+            <span className="text-sm font-black text-emerald-700 leading-none">{currentTotals.porcInstaladoSinAdic}</span>
           </div>
         )}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         
         {/* Sales & Meta Analysis */}
-        <div className="bg-slate-50/50 p-6 rounded-[2rem] border border-slate-100">
-          <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-6">Meta vs Ventas Realizadas</p>
-          <div className="h-[300px] w-full">
+        <div className="bg-slate-50/50 p-3 rounded-xl border border-slate-100">
+          <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-3">Meta vs Ventas</p>
+          <div className="h-[160px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={barData}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
-                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 11, fontWeight: 700 }} />
-                <YAxis axisLine={false} tickLine={false} tick={{ fill: '#94a3b8', fontSize: 10 }} />
+                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 9, fontWeight: 700 }} />
+                <YAxis axisLine={false} tickLine={false} tick={{ fill: '#94a3b8', fontSize: 8 }} />
                 <Tooltip 
                   cursor={{ fill: '#f1f5f9' }}
-                  contentStyle={{ borderRadius: '20px', border: 'none', boxShadow: '0 25px 30px -10px rgba(0,0,0,0.15)' }}
+                  contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)', fontSize: '10px' }}
                 />
-                <Legend verticalAlign="top" iconType="circle" wrapperStyle={{ paddingBottom: '30px' }} />
-                <Bar name="Meta" dataKey="Meta" fill={COMPARISON_COLORS.Meta} radius={[6, 6, 0, 0]} barSize={isComparative ? 30 : 50} />
-                <Bar name="Ventas Total" dataKey="Ventas" fill={COMPARISON_COLORS.Ventas} radius={[6, 6, 0, 0]} barSize={isComparative ? 30 : 50} />
+                <Legend verticalAlign="top" iconType="circle" iconSize={8} wrapperStyle={{ fontSize: '9px', paddingBottom: '10px' }} />
+                <Bar name="Meta" dataKey="Meta" fill={COMPARISON_COLORS.Meta} radius={[3, 3, 0, 0]} barSize={isComparative ? 20 : 35} />
+                <Bar name="Ventas" dataKey="Ventas" fill={COMPARISON_COLORS.Ventas} radius={[3, 3, 0, 0]} barSize={isComparative ? 20 : 35} />
               </BarChart>
             </ResponsiveContainer>
           </div>
         </div>
 
         {/* Execution Comparison */}
-        <div className="bg-slate-50/50 p-6 rounded-[2rem] border border-slate-100">
-          <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-6">Instalado vs Pendiente</p>
-          <div className="h-[300px] w-full">
+        <div className="bg-slate-50/50 p-3 rounded-xl border border-slate-100">
+          <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-3">Instalado vs Pendiente</p>
+          <div className="h-[160px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               {isComparative ? (
                 <BarChart data={barData}>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
-                  <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 11, fontWeight: 700 }} />
-                  <YAxis axisLine={false} tickLine={false} tick={{ fill: '#94a3b8', fontSize: 10 }} />
+                  <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 9, fontWeight: 700 }} />
+                  <YAxis axisLine={false} tickLine={false} tick={{ fill: '#94a3b8', fontSize: 8 }} />
                   <Tooltip 
                     cursor={{ fill: '#f1f5f9' }}
-                    contentStyle={{ borderRadius: '20px', border: 'none', boxShadow: '0 25px 30px -10px rgba(0,0,0,0.15)' }}
+                    contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)', fontSize: '10px' }}
                   />
-                  <Legend verticalAlign="top" iconType="circle" wrapperStyle={{ paddingBottom: '30px' }} />
-                  <Bar name="Instalado" dataKey="Instalado" fill={COMPARISON_COLORS.Instalado} radius={[6, 6, 0, 0]} barSize={30} />
-                  <Bar name="Pendiente" dataKey="Pendiente" fill={COMPARISON_COLORS.Pendiente} radius={[6, 6, 0, 0]} barSize={30} />
+                  <Legend verticalAlign="top" iconType="circle" iconSize={8} wrapperStyle={{ fontSize: '9px', paddingBottom: '10px' }} />
+                  <Bar name="Inst" dataKey="Instalado" fill={COMPARISON_COLORS.Instalado} radius={[3, 3, 0, 0]} barSize={15} />
+                  <Bar name="Pend" dataKey="Pendiente" fill={COMPARISON_COLORS.Pendiente} radius={[3, 3, 0, 0]} barSize={15} />
                 </BarChart>
               ) : (
                 <PieChart>
@@ -146,9 +132,9 @@ const ChartView = ({ totals, comparisonData, title }) => {
                     data={pieData}
                     cx="50%"
                     cy="50%"
-                    innerRadius={80}
-                    outerRadius={105}
-                    paddingAngle={10}
+                    innerRadius={45}
+                    outerRadius={65}
+                    paddingAngle={5}
                     dataKey="value"
                     stroke="none"
                   >
@@ -156,10 +142,8 @@ const ChartView = ({ totals, comparisonData, title }) => {
                       <Cell key={`cell-${index}`} fill={COMPARISON_COLORS[entry.name]} />
                     ))}
                   </Pie>
-                  <Tooltip 
-                    contentStyle={{ borderRadius: '20px', border: 'none', boxShadow: '0 25px 30px -10px rgba(0,0,0,0.15)' }}
-                  />
-                  <Legend verticalAlign="bottom" iconType="circle" />
+                  <Tooltip contentStyle={{ borderRadius: '12px', border: 'none', fontSize: '10px' }} />
+                  <Legend verticalAlign="bottom" iconType="circle" iconSize={8} wrapperStyle={{ fontSize: '9px' }} />
                 </PieChart>
               )}
             </ResponsiveContainer>
@@ -167,19 +151,19 @@ const ChartView = ({ totals, comparisonData, title }) => {
         </div>
 
         {/* Opportunity Breakdown */}
-        <div className="bg-slate-50/50 p-6 rounded-[2rem] border border-slate-100">
-          <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-6">Oportunidades T1-T4</p>
-          <div className="h-[250px] w-full">
+        <div className="bg-slate-50/50 p-3 rounded-xl border border-slate-100">
+          <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-3">Oportunidad vs Digital</p>
+          <div className="h-[120px] w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={opportunityData} layout="vertical" margin={{ left: -20 }}>
+              <BarChart data={opportunityData} layout="vertical" margin={{ left: -10 }}>
                 <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#e2e8f0" />
                 <XAxis type="number" hide />
-                <YAxis dataKey="name" type="category" axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontWeight: 800 }} />
+                <YAxis dataKey="name" type="category" axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontWeight: 800, fontSize: 10 }} />
                 <Tooltip 
                   cursor={{ fill: '#f1f5f9' }}
-                  contentStyle={{ borderRadius: '20px', border: 'none', boxShadow: '0 25px 30px -10px rgba(0,0,0,0.15)' }}
+                  contentStyle={{ borderRadius: '12px', border: 'none', fontSize: '10px' }}
                 />
-                <Bar dataKey="value" fill="#3b82f6" radius={[0, 6, 6, 0]} barSize={25}>
+                <Bar dataKey="value" fill="#3b82f6" radius={[0, 4, 4, 0]} barSize={15}>
                   {opportunityData.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
@@ -190,16 +174,16 @@ const ChartView = ({ totals, comparisonData, title }) => {
         </div>
 
         {/* Services / Descartado Summary */}
-        <div className="bg-slate-50/50 p-6 rounded-[2rem] border border-slate-100">
-          <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-6">Otros Indicadores</p>
-          <div className="grid grid-cols-2 gap-4 h-full pt-4">
-             <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm flex flex-col justify-center">
-                <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] block mb-2">Servicios</span>
-                <span className="text-4xl font-black text-indigo-600">{currentTotals.servicios}</span>
+        <div className="bg-slate-50/50 p-3 rounded-xl border border-slate-100">
+          <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-3">Otros Indicadores</p>
+          <div className="grid grid-cols-2 gap-2 h-full pt-2">
+             <div className="bg-white p-3 rounded-xl border border-slate-100 shadow-sm flex flex-col justify-center">
+                <span className="text-[8px] font-black text-slate-400 uppercase tracking-[0.2em] block mb-1">Servicios</span>
+                <span className="text-xl font-black text-indigo-600 leading-none">{currentTotals.servicios}</span>
              </div>
-             <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm flex flex-col justify-center">
-                <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] block mb-2">Descartado</span>
-                <span className="text-4xl font-black text-rose-500">{currentTotals.descartado}</span>
+             <div className="bg-white p-3 rounded-xl border border-slate-100 shadow-sm flex flex-col justify-center">
+                <span className="text-[8px] font-black text-slate-400 uppercase tracking-[0.2em] block mb-1">Descartado</span>
+                <span className="text-xl font-black text-rose-500 leading-none">{currentTotals.descartado}</span>
              </div>
           </div>
         </div>
