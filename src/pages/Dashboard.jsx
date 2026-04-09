@@ -1,6 +1,8 @@
 import React, { useMemo } from 'react';
 import TableSection from '../components/TableSection';
 import CardGroup from '../components/CardGroup';
+import ChartView from '../components/ChartView';
+import CollapsibleSection from '../components/CollapsibleSection';
 import { dashboardData } from '../data/mockData';
 import { calculateTotals } from '../utils/calculations';
 
@@ -82,8 +84,13 @@ const Dashboard = () => {
                         <TableSection key={section.id} sectionData={section} showSummary={false} />
                     ))}
 
-                    {/* Resumen Único de Bogotá */}
-                    <CardGroup totals={bogotaCombinedTotals} comparisonData={bogotaComparisonData} title="Consolidado Bogotá (G1 + G2)" />
+                    {/* Resumen y Comparativa de Bogotá Colapsable */}
+                    <CollapsibleSection title="Consolidado Bogotá (G1 + G2)" subtitle="Comparativa Operativa y Totales" iconColor="bg-blue-600">
+                        <div className="space-y-6">
+                            <ChartView comparisonData={bogotaComparisonData} title="Comparativa Grupo 1 vs Grupo 2" />
+                            <CardGroup totals={bogotaCombinedTotals} comparisonData={bogotaComparisonData} title="Totales Bogotá" />
+                        </div>
+                    </CollapsibleSection>
                 </section>
 
                 {/* SECCIÓN DINÁMICA (MEDELLÍN, REGIONALES, ETC.) */}

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Card from './Card';
 import CardGroupChart from './CardGroupChart';
 import ViewSelector from './ViewSelector';
+import CollapsibleSection from './CollapsibleSection';
 import { calcPercentage } from '../utils/calculations';
 
 const CardGroup = ({ totals, comparisonData, title = "Resumen de Métricas" }) => {
@@ -65,59 +66,55 @@ const CardGroup = ({ totals, comparisonData, title = "Resumen de Métricas" }) =
   );
 
   return (
-    <div className="bg-white rounded-2xl p-4 border border-slate-200 space-y-4">
-      {/* Header Interno Compacto */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-3">
-        {/* Izquierda: Título y Tarjeta Meta */}
-        <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 flex-1">
-          <div>
-            <h3 className="text-lg md:text-xl font-black text-slate-900 tracking-tight leading-tight uppercase">{title}</h3>
-            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">Monitoreo</p>
+    <CollapsibleSection 
+      title={title} 
+      subtitle="Monitoreo de Objetivos"
+      iconColor="bg-blue-600"
+    >
+      <div className="space-y-4">
+        {/* Header Interno para Selector y Meta */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-3">
+          <div className="flex-1">
+            {viewMode === 'cards' && (
+              <div className="w-32 md:w-36">
+                <Card label="META" value={totals.meta} type="meta" />
+              </div>
+            )}
           </div>
-
-          {viewMode === 'cards' && (
-            <div className="w-32 md:w-36">
-              <Card label="META" value={totals.meta} type="meta" />
-            </div>
-          )}
+          <div className="shrink-0">
+            <ViewSelector
+              options={selectorOptions}
+              activeValue={viewMode}
+              onChange={setViewMode}
+              compact
+            />
+          </div>
         </div>
 
-        {/* Derecha: Selector de Vista */}
-        <div className="shrink-0">
-          <ViewSelector
-            options={selectorOptions}
-            activeValue={viewMode}
-            onChange={setViewMode}
-            compact
-          />
-        </div>
+        {/* Contenido */}
+        {viewMode === 'cards' ? (
+          <div className="space-y-6 pt-1">
+            {renderMetricSection("Con Adicionales", {
+              servicios: totals.servicios,
+              venta: totals.ventasAdicionales,
+              instalado: totals.instaladoAdiciones,
+              pendiente: totals.pendienteAdiciones
+            }, false)}
+
+            {renderMetricSection("Sin Adicionales", {
+              servicios: totals.servicios,
+              venta: totals.ventasSinAdicionales,
+              instalado: totals.instalado,
+              pendiente: totals.pendiente
+            }, true)}
+          </div>
+        ) : (
+          <div className="bg-slate-50/50 rounded-2xl p-4 border border-slate-100">
+            <CardGroupChart totals={totals} />
+          </div>
+        )}
       </div>
-
-      {viewMode === 'cards' ? (
-        <div className="space-y-6 pt-1">
-
-          {/* Sección Con Adicionales */}
-          {renderMetricSection("Con Adicionales", {
-            servicios: totals.servicios,
-            venta: totals.ventasAdicionales,
-            instalado: totals.instaladoAdiciones,
-            pendiente: totals.pendienteAdiciones
-          }, false)}
-
-          {/* Sección Sin Adicionales */}
-          {renderMetricSection("Sin Adicionales", {
-            servicios: totals.servicios,
-            venta: totals.ventasSinAdicionales,
-            instalado: totals.instalado,
-            pendiente: totals.pendiente
-          }, true)}
-        </div>
-      ) : (
-        <div className="bg-slate-50/50 rounded-2xl p-4 border border-slate-100">
-          <CardGroupChart totals={totals} />
-        </div>
-      )}
-    </div>
+    </CollapsibleSection>
   );
 };
 
