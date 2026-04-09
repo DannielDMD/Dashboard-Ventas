@@ -1,10 +1,37 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
 @layer base {
+  :root {
+    --font-primary: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
   body {
-    background-color: #f9fafb; /* bg-gray-50 */
-    color: #1f2937; /* text-gray-800 */
-    font-family: ui-sans-serif, system-ui, sans-serif;
+    background-color: #f8fafc;
+    color: #334155;
+    font-family: var(--font-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     margin: 0;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-primary);
+    letter-spacing: -0.025em;
+  }
+}
+
+@layer components {
+  .text-dashboard-title {
+    @apply text-2xl md:text-3xl font-black text-slate-900;
+  }
+  .text-dashboard-subtitle {
+    @apply text-base md:text-lg font-bold text-slate-700;
+  }
+  .text-dashboard-label {
+    @apply text-[10px] font-bold uppercase tracking-widest text-slate-500;
+  }
+  .text-dashboard-value {
+    @apply text-sm md:text-base font-extrabold tabular-nums text-slate-900;
   }
 }

@@ -15,11 +15,14 @@ const CardGroup = ({ totals, comparisonData, title = "Resumen de Métricas" }) =
   ];
 
   const renderMetricSection = (sectionTitle, data, isSinAdiciones = false) => (
-    <div className="space-y-2">
-      <h5 className="text-xs font-bold text-slate-500 uppercase tracking-widest pl-2 border-l-2 border-blue-500 ml-1">
-        {sectionTitle}
-      </h5>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-1">
+    <div className="space-y-4">
+      <div className="flex items-center gap-3">
+        <div className="w-1.5 h-6 bg-blue-600 rounded-full shadow-sm shadow-blue-200"></div>
+        <h5 className="text-[13px] md:text-sm font-black text-slate-800 uppercase tracking-wider">
+          {sectionTitle}
+        </h5>
+      </div>
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-1.5 md:gap-2">
         <Card label="Cantidad" value={data.servicios} />
         <Card label="Venta" value={data.venta} type="ventas" />
 
@@ -62,29 +65,35 @@ const CardGroup = ({ totals, comparisonData, title = "Resumen de Métricas" }) =
   );
 
   return (
-    <div className="bg-white rounded-[1.5rem] p-4 lg:p-5 lg:px-6 border border-slate-200 shadow-[0_10px_30px_-15px_rgba(0,0,0,0.05)] space-y-4 lg:space-y-3">
+    <div className="bg-white rounded-[1.5rem] p-4 lg:p-6 border border-slate-200 shadow-[0_15px_40px_-20px_rgba(0,0,0,0.08)] space-y-6">
       {/* Header Interno Compacto */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-slate-100 pb-3">
-        <div>
-          <h3 className="text-lg font-black text-slate-900 tracking-tight">{title}</h3>
-          <p className="text-slate-400 text-[9px] font-bold uppercase tracking-widest mt-0.5">Control de Rendimiento</p>
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-5">
+        {/* Izquierda: Título y Tarjeta Meta */}
+        <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8 flex-1">
+          <div>
+            <h3 className="text-xl md:text-2xl font-black text-slate-900 tracking-tight leading-tight">{title}</h3>
+            <p className="text-dashboard-label mt-1">Monitoreo de Objetivos</p>
+          </div>
+
+          {viewMode === 'cards' && (
+            <div className="w-36 md:w-40">
+              <Card label="META GENERAL" value={totals.meta} type="meta" />
+            </div>
+          )}
         </div>
 
-        <ViewSelector 
-          options={selectorOptions} 
-          activeValue={viewMode} 
-          onChange={setViewMode} 
-        />
+        {/* Derecha: Selector de Vista */}
+        <div className="shrink-0">
+          <ViewSelector 
+            options={selectorOptions} 
+            activeValue={viewMode} 
+            onChange={setViewMode} 
+          />
+        </div>
       </div>
 
       {viewMode === 'cards' ? (
-        <div className="space-y-5 lg:space-y-4">
-          {/* Tarjeta de Meta Única Compacta */}
-          <div className="flex justify-start">
-            <div className="w-32">
-              <Card label="Meta General" value={totals.meta} type="meta" />
-            </div>
-          </div>
+        <div className="space-y-8 lg:space-y-10 pt-2">
 
           {/* Sección Con Adicionales */}
           {renderMetricSection("Con Adicionales", {
@@ -103,7 +112,7 @@ const CardGroup = ({ totals, comparisonData, title = "Resumen de Métricas" }) =
           }, true)}
         </div>
       ) : (
-        <div className="bg-slate-50/50 rounded-xl p-1 border border-slate-100">
+        <div className="bg-slate-50/50 rounded-2xl p-2 border border-slate-100">
           <ChartView totals={totals} comparisonData={comparisonData} title={title} />
         </div>
       )}

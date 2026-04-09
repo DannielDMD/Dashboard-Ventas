@@ -40,8 +40,8 @@ const TableSection = ({ sectionData, showSummary = true }) => {
     <div className="mb-6 p-4 sm:p-5 lg:p-6 xl:p-8 bg-white/40 rounded-3xl border border-gray-200/50 shadow-sm">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
         <div className="flex items-center gap-4">
-          <div className="w-2.5 h-8 bg-blue-600 rounded-full"></div>
-          <h3 className="text-3xl font-black text-gray-900 tracking-tight">{nombre}</h3>
+          <div className="w-3 h-8 bg-blue-600 rounded-full shadow-lg shadow-blue-200"></div>
+          <h3 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tight">{nombre}</h3>
         </div>
 
         <ViewSelector
