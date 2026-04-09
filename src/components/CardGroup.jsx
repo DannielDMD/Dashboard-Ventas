@@ -17,8 +17,8 @@ const CardGroup = ({ totals, comparisonData, title = "Resumen de Métricas" }) =
   const renderMetricSection = (sectionTitle, data, isSinAdiciones = false) => (
     <div className="space-y-4">
       <div className="flex items-center gap-3">
-        <div className="w-1.5 h-6 bg-blue-600 rounded-full shadow-sm shadow-blue-200"></div>
-        <h5 className="text-[13px] md:text-sm font-black text-slate-800 uppercase tracking-wider">
+        <div className="w-1 h-5 bg-slate-400 rounded-full"></div>
+        <h5 className="text-[12px] md:text-[13px] font-black text-slate-700 uppercase tracking-widest">
           {sectionTitle}
         </h5>
       </div>
@@ -26,39 +26,39 @@ const CardGroup = ({ totals, comparisonData, title = "Resumen de Métricas" }) =
         <Card label="Cantidad" value={data.servicios} />
         <Card label="Venta" value={data.venta} type="ventas" />
 
-        <Card 
-            label="Instalado" 
-            value={data.instalado} 
-            type="instalado" 
-            percentageValue={calcPercentage(data.instalado, totals.meta)} 
+        <Card
+          label="Instalado"
+          value={data.instalado}
+          type="instalado"
+          percentageValue={calcPercentage(data.instalado, totals.meta)}
         />
 
-        <Card 
-            label="Pendiente" 
-            value={data.pendiente} 
-            type="pendiente" 
-            percentageValue={calcPercentage(data.pendiente, totals.meta)} 
+        <Card
+          label="Pendiente"
+          value={data.pendiente}
+          type="pendiente"
+          percentageValue={calcPercentage(data.pendiente, totals.meta)}
         />
 
-        <Card 
-            label="Descartado" 
-            value={isSinAdiciones ? totals.descartado : totals.descartadoAdiciones} 
-            type="descartado" 
-            percentageValue={calcPercentage(isSinAdiciones ? totals.descartado : totals.descartadoAdiciones, totals.meta)} 
+        <Card
+          label="Descartado"
+          value={isSinAdiciones ? totals.descartado : totals.descartadoAdiciones}
+          type="descartado"
+          percentageValue={calcPercentage(isSinAdiciones ? totals.descartado : totals.descartadoAdiciones, totals.meta)}
         />
 
-        <Card 
-            label="Oportunidad" 
-            value={totals.oportunidad} 
-            type="oportunidad" 
-            percentageValue={calcPercentage(totals.oportunidad, totals.meta)} 
+        <Card
+          label="Oportunidad"
+          value={totals.oportunidad}
+          type="oportunidad"
+          percentageValue={calcPercentage(totals.oportunidad, totals.meta)}
         />
 
-        <Card 
-            label="Digital" 
-            value={totals.digital} 
-            type="digital" 
-            percentageValue={calcPercentage(totals.digital, totals.meta)} 
+        <Card
+          label="Digital"
+          value={totals.digital}
+          type="digital"
+          percentageValue={calcPercentage(totals.digital, totals.meta)}
         />
       </div>
     </div>
@@ -77,17 +77,17 @@ const CardGroup = ({ totals, comparisonData, title = "Resumen de Métricas" }) =
 
           {viewMode === 'cards' && (
             <div className="w-36 md:w-40">
-              <Card label="META GENERAL" value={totals.meta} type="meta" />
+              <Card label="META" value={totals.meta} type="meta" />
             </div>
           )}
         </div>
 
         {/* Derecha: Selector de Vista */}
         <div className="shrink-0">
-          <ViewSelector 
-            options={selectorOptions} 
-            activeValue={viewMode} 
-            onChange={setViewMode} 
+          <ViewSelector
+            options={selectorOptions}
+            activeValue={viewMode}
+            onChange={setViewMode}
           />
         </div>
       </div>

@@ -92,13 +92,7 @@ const Dashboard = () => {
                         <TableSection key={section.id} sectionData={section} />
                     ))}
                 </section>
-
             </main>
-            {/*
-            <footer className="max-w-[1500px] mx-auto px-8 py-12 border-t border-slate-200 text-center">
-                <p className="text-slate-400 text-sm font-medium italic">Dashboard 4D - Optimizado para lectura de datos rápida y escalable.</p>
-            </footer>
-            */}
         </div>
 
 
