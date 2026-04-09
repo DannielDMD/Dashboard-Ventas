@@ -24,7 +24,7 @@ const COLORS = {
   servicios: '#6366f1' // indigo-500
 };
 
-const CardGroupChart = ({ totals }) => {
+const CardGroupChart = ({ totals, rightContent }) => {
   // Maneja el selector local dentro de las gráficas
   const [filterMode, setFilterMode] = useState('ambos'); // 'con', 'sin', 'ambos'
 
@@ -101,42 +101,54 @@ const CardGroupChart = ({ totals }) => {
 
   return (
     <div className="space-y-4">
-      {/* Mini Selector de Escenarios */}
-      <div className="flex justify-center md:justify-end mb-2">
-        <div className="inline-flex bg-slate-100 p-1 rounded-lg border border-slate-200">
-          {[ 
-            { id: 'ambos', label: 'Ambos' }, 
-            { id: 'con', label: 'Con Adicionales' }, 
-            { id: 'sin', label: 'Sin Adicionales' } 
-          ].map((mode) => (
-            <button
-              key={mode.id}
-              onClick={() => setFilterMode(mode.id)}
-              className={`px-4 py-1.5 text-[11px] font-bold rounded-md transition-all ${
-                filterMode === mode.id 
-                  ? 'bg-white text-slate-900 shadow-sm border border-slate-200/50' 
-                  : 'text-slate-500 hover:text-slate-700'
-              }`}
-            >
-              {mode.label}
-            </button>
-          ))}
+      {/* Header Compacto de Controles */}
+      <div className="flex justify-center md:justify-end mb-4">
+        <div className="flex flex-wrap items-center justify-center gap-3 bg-slate-100 p-1.5 rounded-xl border border-slate-200">
+          {/* 1. Escenarios */}
+          <div className="inline-flex bg-white/50 p-0.5 rounded-lg border border-slate-200/50">
+            {[
+              { id: 'ambos', label: 'Ver Ambos' },
+              { id: 'con', label: 'Con' },
+              { id: 'sin', label: 'Sin' }
+            ].map((mode) => (
+              <button
+                key={mode.id}
+                onClick={() => setFilterMode(mode.id)}
+                className={`px-4 py-1.5 text-nav-pill rounded-md transition-all ${filterMode === mode.id
+                  ? 'bg-white text-slate-900 shadow-sm border border-slate-200/50'
+                  : 'text-slate-400 hover:text-slate-600'
+                  }`}
+              >
+                {mode.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Separador */}
+          {rightContent && <div className="h-4 w-px bg-slate-300 mx-1"></div>}
+
+          {/* 2. Selector de Vista (Tabla/Gráfica) */}
+          {rightContent && (
+            <div className="flex items-center">
+              {rightContent}
+            </div>
+          )}
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        
+
         {/* Gráfica A: Meta vs Ventas */}
-        <div className="bg-white p-4 rounded-xl border border-slate-200">
-          <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-4">Meta vs Ventas</h4>
+        <div className="bg-white p-4 rounded-xl border border-slate-200 flex flex-col">
+          <h4 className="text-[16px] text-graph-sub mb-4">Meta vs Ventas</h4>
           <div className="h-[200px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={dataMetaVentas} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: '#94a3b8' }} />
-                <YAxis axisLine={false} tickLine={false} tickFormatter={formatTick} tick={{ fontSize: 10, fill: '#94a3b8' }} />
+                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 16, fill: '#94a3b8' }} />
+                <YAxis axisLine={false} tickLine={false} tickFormatter={formatTick} tick={{ fontSize: 16, fill: '#94a3b8' }} />
                 <Tooltip content={<CustomTooltip />} />
-                <Legend iconType="circle" iconSize={8} wrapperStyle={{ fontSize: '11px', fontWeight: 'bold' }} />
+                <Legend iconType="circle" iconSize={8} wrapperStyle={{ fontSize: '16px', fontWeight: 'bold' }} />
                 <Bar dataKey="Meta" fill={COLORS.meta} radius={[4, 4, 0, 0]} />
                 {filterMode !== 'sin' && <Bar dataKey="Ventas Con" fill={COLORS.conAdic} radius={[4, 4, 0, 0]} />}
                 {filterMode !== 'con' && <Bar dataKey="Ventas Sin" fill={COLORS.sinAdic} radius={[4, 4, 0, 0]} />}
@@ -146,16 +158,16 @@ const CardGroupChart = ({ totals }) => {
         </div>
 
         {/* Gráfica B: Instalado vs Pendiente */}
-        <div className="bg-white p-4 rounded-xl border border-slate-200">
-          <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-4">Eficiencia de Instalación</h4>
+        <div className="bg-white p-4 rounded-xl border border-slate-200 flex flex-col">
+          <h4 className="text-[16px] text-graph-sub mb-4">Eficiencia de Instalación</h4>
           <div className="h-[200px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={dataInstalacion} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 10, fontWeight: 'bold', fill: '#64748b' }} />
-                <YAxis axisLine={false} tickLine={false} tickFormatter={formatTick} tick={{ fontSize: 10, fill: '#94a3b8' }} />
+                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 16, fontWeight: 'bold', fill: '#64748b' }} />
+                <YAxis axisLine={false} tickLine={false} tickFormatter={formatTick} tick={{ fontSize: 16, fill: '#94a3b8' }} />
                 <Tooltip content={<CustomTooltip />} />
-                <Legend iconType="circle" iconSize={8} wrapperStyle={{ fontSize: '11px', fontWeight: 'bold' }} />
+                <Legend iconType="circle" iconSize={8} wrapperStyle={{ fontSize: '16px', fontWeight: 'bold' }} />
                 <Bar dataKey="Instalado" fill={COLORS.sinAdic} radius={[4, 4, 0, 0]} />
                 <Bar dataKey="Pendiente" fill={COLORS.pendiente} radius={[4, 4, 0, 0]} />
               </BarChart>
@@ -165,7 +177,7 @@ const CardGroupChart = ({ totals }) => {
 
         {/* Gráfica C: Oportunidad vs Digital */}
         <div className="bg-white p-4 rounded-xl border border-slate-200 flex flex-col">
-          <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-2">Oportunidad vs Digital</h4>
+          <h4 className="text-[16px] text-graph-sub mb-4">Oportunidad vs Digital</h4>
           <div className="h-[200px] w-full flex-1">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
@@ -184,7 +196,7 @@ const CardGroupChart = ({ totals }) => {
                   ))}
                 </Pie>
                 <Tooltip content={<CustomTooltip />} />
-                <Legend iconType="circle" iconSize={8} wrapperStyle={{ fontSize: '11px', fontWeight: 'bold' }} verticalAlign="bottom" />
+                <Legend iconType="circle" iconSize={8} wrapperStyle={{ fontSize: '16px', fontWeight: 'bold' }} verticalAlign="bottom" />
               </PieChart>
             </ResponsiveContainer>
           </div>
@@ -192,15 +204,15 @@ const CardGroupChart = ({ totals }) => {
 
         {/* Gráfica D: Servicios vs Descartado */}
         <div className="bg-white p-4 rounded-xl border border-slate-200">
-          <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-4">Servicios & Descartados</h4>
+          <h4 className="text-[16px] text-graph-sub mb-4">Servicios & Descartados</h4>
           <div className="h-[200px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={dataServDesc} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: '#94a3b8' }} />
-                <YAxis axisLine={false} tickLine={false} tickFormatter={formatTick} tick={{ fontSize: 10, fill: '#94a3b8' }} />
+                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 16, fill: '#94a3b8' }} />
+                <YAxis axisLine={false} tickLine={false} tickFormatter={formatTick} tick={{ fontSize: 16, fill: '#94a3b8' }} />
                 <Tooltip content={<CustomTooltip />} />
-                <Legend iconType="circle" iconSize={8} wrapperStyle={{ fontSize: '11px', fontWeight: 'bold' }} />
+                <Legend iconType="circle" iconSize={8} wrapperStyle={{ fontSize: '16px', fontWeight: 'bold' }} />
                 <Bar dataKey="Servicios" fill={COLORS.servicios} radius={[4, 4, 0, 0]} />
                 {filterMode !== 'sin' && <Bar dataKey="Desc. Con" fill={COLORS.descartado} radius={[4, 4, 0, 0]} />}
                 {filterMode !== 'con' && <Bar dataKey="Desc. Sin" fill={COLORS.descartado} radius={[4, 4, 0, 0]} opacity={0.6} />}

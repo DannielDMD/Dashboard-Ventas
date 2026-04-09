@@ -1,37 +1,85 @@
 @import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
+@theme {
+  /* Colores de Marca Funcionales */
+  --color-primary: #2563eb;
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+  --color-info: #06b6d4;
+  --color-brand-slate: #334155;
+
+  /* Neutros Dashboard */
+  --color-dash-bg: #f8fafc;
+  --color-dash-card: #ffffff;
+  --color-dash-border: #e2e8f0;
+  --color-dash-text-main: #0f172a;
+  --color-dash-text-muted: #64748b;
+
+  /* Escala de Espaciado Global */
+  --spacing-dash-gap: 1.25rem;
+  --spacing-dash-tight: 0.75rem;
+}
+
 @layer base {
-  :root {
-    --font-primary: 'Inter', system-ui, -apple-system, sans-serif;
-  }
-
   body {
-    background-color: #f8fafc;
-    color: #334155;
-    font-family: var(--font-primary);
+    background-color: var(--color-dash-bg);
+    color: var(--color-dash-text-main);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
     margin: 0;
-  }
-
-  h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-primary);
-    letter-spacing: -0.025em;
   }
 }
 
 @layer components {
-  .text-dashboard-title {
-    @apply text-2xl md:text-3xl font-black text-slate-900;
+
+  /* Tipografía Semántica (Aumentada para Legibilidad) */
+  .text-h-main {
+    @apply text-3xl md:text-4xl lg:text-5xl font-black tracking-tighter text-slate-900 uppercase;
   }
-  .text-dashboard-subtitle {
-    @apply text-base md:text-lg font-bold text-slate-700;
+
+  .text-h-section {
+    @apply text-xl md:text-2xl font-black tracking-tight text-slate-900 uppercase;
   }
-  .text-dashboard-label {
-    @apply text-[10px] font-bold uppercase tracking-widest text-slate-500;
+
+  .text-h-sub {
+    @apply text-base md:text-lg font-black text-slate-800 uppercase tracking-widest;
   }
-  .text-dashboard-value {
-    @apply text-sm md:text-base font-extrabold tabular-nums text-slate-900;
+
+  /* Etiquetas de Datos y Metadata */
+  .text-label-caps {
+    @apply text-[12px] md:text-[13px] font-black uppercase tracking-[0.12em] text-slate-500/80;
+  }
+
+  /* NUEVA: Específica para Selectores (Pills/Tabs) */
+  .text-nav-pill {
+    @apply text-xs md:text-sm font-bold tracking-tight;
+  }
+
+  /* NUEVA: Específica para Subtítulos de Gráficas */
+  .text-graph-sub {
+    @apply text-[11px] md:text-[12px] font-black uppercase tracking-wider text-slate-400;
+  }
+
+  .text-metric {
+    @apply text-2xl md:text-3xl lg:text-4xl font-black tabular-nums text-slate-900 leading-none;
+  }
+
+  .text-metric-sm {
+    @apply text-base md:text-lg lg:text-xl font-black tabular-nums text-slate-900;
+  }
+
+  .text-percentage {
+    @apply text-xs md:text-sm font-black tracking-tight;
+  }
+
+  /* Contenedores Estándar */
+  .card-base {
+    @apply bg-white rounded-2xl border border-slate-200 shadow-sm transition-all;
+  }
+
+  .card-inner {
+    @apply bg-slate-50/50 p-5 rounded-xl border border-slate-100;
   }
 }

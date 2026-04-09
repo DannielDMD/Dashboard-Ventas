@@ -17,100 +17,102 @@ const CardGroup = ({ totals, comparisonData, title = "Resumen de Métricas" }) =
 
   const renderMetricSection = (sectionTitle, data, isSinAdiciones = false) => (
     <div className="space-y-4">
-      <div className="flex items-center gap-3">
-        <div className="w-1 h-5 bg-slate-400 rounded-full"></div>
-        <h5 className="text-[12px] md:text-[13px] font-black text-slate-700 uppercase tracking-widest">
+      <div className="flex items-center gap-3 px-1">
+        <div className="w-1.5 h-6 bg-slate-300 rounded-full"></div>
+        <h5 className="text-h-sub">
           {sectionTitle}
         </h5>
       </div>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-1.5 md:gap-2">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-4">
         <Card label="Cantidad" value={data.servicios} />
         <Card label="Venta" value={data.venta} type="ventas" />
 
-        <Card
-          label="Instalado"
-          value={data.instalado}
-          type="instalado"
-          percentageValue={calcPercentage(data.instalado, totals.meta)}
+        <Card 
+          label="Instalado" 
+          value={data.instalado} 
+          type="instalado" 
+          percentageValue={calcPercentage(data.instalado, totals.meta)} 
         />
-
-        <Card
-          label="Pendiente"
-          value={data.pendiente}
-          type="pendiente"
-          percentageValue={calcPercentage(data.pendiente, totals.meta)}
+        <Card 
+          label="Pendiente" 
+          value={data.pendiente} 
+          type="pendiente" 
+          percentageValue={calcPercentage(data.pendiente, totals.meta)} 
         />
-
-        <Card
-          label="Descartado"
-          value={isSinAdiciones ? totals.descartado : totals.descartadoAdiciones}
-          type="descartado"
-          percentageValue={calcPercentage(isSinAdiciones ? totals.descartado : totals.descartadoAdiciones, totals.meta)}
+        <Card 
+          label="Descartado" 
+          value={data.descartado} 
+          type="descartado" 
+          percentageValue={calcPercentage(data.descartado, totals.meta)} 
         />
-
-        <Card
-          label="Oportunidad"
-          value={totals.oportunidad}
-          type="oportunidad"
-          percentageValue={calcPercentage(totals.oportunidad, totals.meta)}
+        <Card 
+          label="Oportunidad" 
+          value={totals.oportunidad} 
+          type="oportunidad" 
+          percentageValue={calcPercentage(totals.oportunidad, totals.meta)} 
         />
-
-        <Card
-          label="Digital"
-          value={totals.digital}
-          type="digital"
-          percentageValue={calcPercentage(totals.digital, totals.meta)}
+        <Card 
+          label="Digital" 
+          value={totals.digital} 
+          type="digital" 
+          percentageValue={calcPercentage(totals.digital, totals.meta)} 
         />
       </div>
     </div>
   );
 
+  const selector = (
+    <ViewSelector
+      options={selectorOptions}
+      activeValue={viewMode}
+      onChange={setViewMode}
+      compact
+    />
+  );
+
   return (
     <CollapsibleSection 
       title={title} 
-      subtitle="Monitoreo de Objetivos"
+      subtitle="Monitoreo de Objetivos y Cumplimiento"
       iconColor="bg-blue-600"
     >
-      <div className="space-y-4">
+      <div className="space-y-6">
         {/* Header Interno para Selector y Meta */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-3">
-          <div className="flex-1">
-            {viewMode === 'cards' && (
-              <div className="w-32 md:w-36">
-                <Card label="META" value={totals.meta} type="meta" />
+        {viewMode === 'cards' && (
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-5 px-1">
+            <div className="flex-1">
+              <div className="w-40 md:w-48">
+                <Card label="META GLOBAL" value={totals.meta} type="meta" />
               </div>
-            )}
+            </div>
+            <div className="shrink-0">
+              {selector}
+            </div>
           </div>
-          <div className="shrink-0">
-            <ViewSelector
-              options={selectorOptions}
-              activeValue={viewMode}
-              onChange={setViewMode}
-              compact
-            />
-          </div>
-        </div>
+        )}
 
         {/* Contenido */}
         {viewMode === 'cards' ? (
-          <div className="space-y-6 pt-1">
-            {renderMetricSection("Con Adicionales", {
+          <div className="space-y-8 pt-2">
+            {renderMetricSection("ESCENARIO: CON ADICIONALES", {
               servicios: totals.servicios,
               venta: totals.ventasAdicionales,
               instalado: totals.instaladoAdiciones,
-              pendiente: totals.pendienteAdiciones
+              pendiente: totals.pendienteAdiciones,
+              descartado: totals.descartadoAdiciones
             }, false)}
 
-            {renderMetricSection("Sin Adicionales", {
+            {renderMetricSection("ESCENARIO: SIN ADICIONALES", {
               servicios: totals.servicios,
               venta: totals.ventasSinAdicionales,
               instalado: totals.instalado,
-              pendiente: totals.pendiente
+              pendiente: totals.pendiente,
+              descartado: totals.descartado
             }, true)}
           </div>
         ) : (
-          <div className="bg-slate-50/50 rounded-2xl p-4 border border-slate-100">
-            <CardGroupChart totals={totals} />
+          <div className="card-inner">
+            <CardGroupChart totals={totals} rightContent={selector} />
           </div>
         )}
       </div>

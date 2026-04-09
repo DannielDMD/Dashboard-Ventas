@@ -35,13 +35,13 @@ const ChartView = ({ comparisonData, title, rightContent }) => {
   // B. INSTALACIÓN VS PENDIENTE
   const dataInstalacion = comparisonData.map(d => ({
     name: d.name,
-    ...(filterMode === 'ambos' || filterMode === 'con' ? { 
-        'Instalado Con': d.instaladoAdiciones,
-        'Pendiente Con': d.pendienteAdiciones
+    ...(filterMode === 'ambos' || filterMode === 'con' ? {
+      'Instalado Con': d.instaladoAdiciones,
+      'Pendiente Con': d.pendienteAdiciones
     } : {}),
-    ...(filterMode === 'ambos' || filterMode === 'sin' ? { 
-        'Instalado Sin': d.instalado,
-        'Pendiente Sin': d.pendiente
+    ...(filterMode === 'ambos' || filterMode === 'sin' ? {
+      'Instalado Sin': d.instalado,
+      'Pendiente Sin': d.pendiente
     } : {}),
   }));
 
@@ -88,43 +88,54 @@ const ChartView = ({ comparisonData, title, rightContent }) => {
           </h4>
         </div>
         <div className="flex flex-col sm:flex-row items-center gap-3">
-          {/* Selector de Contexto */}
-          <div className="inline-flex bg-slate-50 p-1 rounded-lg border border-slate-200">
-            {[ 
-              { id: 'ambos', label: 'Ver Ambos' }, 
-              { id: 'con', label: 'Con Adicionales' }, 
-              { id: 'sin', label: 'Sin Adicionales' } 
-            ].map((mode) => (
-              <button
-                key={mode.id}
-                onClick={() => setFilterMode(mode.id)}
-                className={`px-3 py-1.5 text-[10px] md:text-[11px] font-bold rounded-md transition-all ${
-                  filterMode === mode.id 
-                    ? 'bg-white text-slate-900 shadow-[0_2px_8px_-2px_rgba(0,0,0,0.1)] border border-slate-200/50' 
-                    : 'text-slate-500 hover:text-slate-700 focus:outline-none'
-                }`}
-              >
-                {mode.label}
-              </button>
-            ))}
+          {/* Contenedor de Selectores Unidos */}
+          <div className="flex flex-wrap items-center justify-center md:justify-end gap-3 bg-slate-50 p-1 rounded-xl border border-slate-200 shadow-inner">
+            {/* 1. Selector de Contexto (Interior) */}
+            <div className="inline-flex bg-white/50 p-0.5 rounded-lg">
+              {[
+                { id: 'ambos', label: 'Ver Ambos' },
+                { id: 'con', label: 'Con' },
+                { id: 'sin', label: 'Sin' }
+              ].map((mode) => (
+                <button
+                  key={mode.id}
+                  onClick={() => setFilterMode(mode.id)}
+                  className={`px-4 py-1.5 text-nav-pill rounded-md transition-all ${filterMode === mode.id
+                    ? 'bg-white text-slate-900 shadow-sm border border-slate-200/50'
+                    : 'text-slate-400 hover:text-slate-600 focus:outline-none'
+                    }`}
+                >
+                  {mode.label}
+                </button>
+              ))}
+            </div>
+
+            {/* Separador sutil */}
+            {rightContent && <div className="h-4 w-px bg-slate-200 mx-1"></div>}
+
+            {/* 2. Selector de Vista (Externo) */}
+            {rightContent && (
+              <div className="flex items-center">
+                {rightContent}
+              </div>
+            )}
           </div>
-          {rightContent && rightContent}
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        
+
         {/* Gráfica A: Ventas */}
-        <div className="bg-slate-50/50 p-3 rounded-xl border border-slate-100 flex flex-col justify-between">
-          <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-3">Comparativa de Ventas</p>
+        <div className="bg-white p-4 rounded-xl border border-slate-200 flex flex-col">
+          <h4 className="text-[16px] text-graph-sub mb-4">Comparativa de Ventas</h4>
           <div className="h-[220px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={dataVentas} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: '#64748b', fontWeight: 'bold' }} />
-                <YAxis axisLine={false} tickLine={false} tickFormatter={formatTick} tick={{ fontSize: 10, fill: '#94a3b8' }} />
+                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 16, fill: '#64748b', fontWeight: 'bold' }} />
+                <YAxis axisLine={false} tickLine={false} tickFormatter={formatTick} tick={{ fontSize: 16, fill: '#94a3b8' }} />
                 <Tooltip content={<CustomTooltip />} />
-                <Legend iconType="circle" iconSize={8} wrapperStyle={{ fontSize: '10px', fontWeight: 'bold' }} verticalAlign="top" />
+                <Legend iconType="circle" iconSize={8} wrapperStyle={{ fontSize: '16px', fontWeight: 'bold' }} verticalAlign="top" />
                 <Bar name="Meta" dataKey="Meta" fill={COLORS.meta} radius={[4, 4, 0, 0]} />
                 {filterMode !== 'sin' && <Bar name="V. Con Adic" dataKey="Ventas Con" fill={COLORS.conAdic} radius={[4, 4, 0, 0]} />}
                 {filterMode !== 'con' && <Bar name="V. Sin Adic" dataKey="Ventas Sin" fill={COLORS.sinAdic} radius={[4, 4, 0, 0]} />}
@@ -134,16 +145,16 @@ const ChartView = ({ comparisonData, title, rightContent }) => {
         </div>
 
         {/* Gráfica B: Instalación vs Pendiente */}
-        <div className="bg-slate-50/50 p-3 rounded-xl border border-slate-100 flex flex-col justify-between">
-          <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-3">Instalados vs Pendientes</p>
+        <div className="bg-white p-4 rounded-xl border border-slate-200 flex flex-col">
+          <h4 className="text-[16px] text-graph-sub mb-4">Instalados vs Pendientes</h4>
           <div className="h-[220px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={dataInstalacion} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: '#64748b', fontWeight: 'bold' }} />
-                <YAxis axisLine={false} tickLine={false} tickFormatter={formatTick} tick={{ fontSize: 10, fill: '#94a3b8' }} />
+                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 16, fill: '#64748b', fontWeight: 'bold' }} />
+                <YAxis axisLine={false} tickLine={false} tickFormatter={formatTick} tick={{ fontSize: 16, fill: '#94a3b8' }} />
                 <Tooltip content={<CustomTooltip />} />
-                <Legend iconType="circle" iconSize={8} wrapperStyle={{ fontSize: '10px', fontWeight: 'bold' }} verticalAlign="top" />
+                <Legend iconType="circle" iconSize={8} wrapperStyle={{ fontSize: '16px', fontWeight: 'bold' }} verticalAlign="top" />
                 {filterMode !== 'sin' && <Bar name="Inst (Con)" dataKey="Instalado Con" fill={COLORS.conAdic} radius={[4, 4, 0, 0]} stackId="con" />}
                 {filterMode !== 'sin' && <Bar name="Pend (Con)" dataKey="Pendiente Con" fill="#eab308" radius={[4, 4, 0, 0]} stackId="con" />}
                 {filterMode !== 'con' && <Bar name="Inst (Sin)" dataKey="Instalado Sin" fill={COLORS.sinAdic} radius={[4, 4, 0, 0]} stackId="sin" />}
@@ -154,16 +165,16 @@ const ChartView = ({ comparisonData, title, rightContent }) => {
         </div>
 
         {/* Gráfica C: Servicios */}
-        <div className="bg-slate-50/50 p-3 rounded-xl border border-slate-100 flex flex-col justify-between">
-          <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-3">Volumen de Servicios</p>
+        <div className="bg-white p-4 rounded-xl border border-slate-200 flex flex-col">
+          <h4 className="text-[16px] text-graph-sub mb-4">Volumen de Servicios</h4>
           <div className="h-[220px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={dataServicios} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: '#64748b', fontWeight: 'bold' }} />
-                <YAxis axisLine={false} tickLine={false} tickFormatter={formatTick} tick={{ fontSize: 10, fill: '#94a3b8' }} />
+                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 16, fill: '#64748b', fontWeight: 'bold' }} />
+                <YAxis axisLine={false} tickLine={false} tickFormatter={formatTick} tick={{ fontSize: 16, fill: '#94a3b8' }} />
                 <Tooltip content={<CustomTooltip />} />
-                <Legend iconType="circle" iconSize={8} wrapperStyle={{ fontSize: '10px', fontWeight: 'bold' }} verticalAlign="top" />
+                <Legend iconType="circle" iconSize={8} wrapperStyle={{ fontSize: '16px', fontWeight: 'bold' }} verticalAlign="top" />
                 <Bar name="Servicios" dataKey="Servicios" fill={COLORS.servicios} radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>

@@ -32,15 +32,6 @@ const TableSection = ({ sectionData, showSummary = true }) => {
   return (
     <CollapsibleSection title={nombre} subtitle="Análisis de Sedes">
       <div className="space-y-4">
-        <div className="flex justify-end">
-          <ViewSelector
-            options={selectorOptions}
-            activeValue={viewMode}
-            onChange={setViewMode}
-            compact
-          />
-        </div>
-
         {ubicaciones.map((u, i) => {
           const locTotals = calculateTotals(u.filas);
           const agenciasRows = u.filas.filter(r => r.tipo === 'Agencias');
@@ -50,18 +41,30 @@ const TableSection = ({ sectionData, showSummary = true }) => {
             { ...calculateTotals(directosRows), name: 'Directos' }
           ];
 
+          // El selector se pasa a los hijos para ahorrar espacio
+          const selector = (
+            <ViewSelector
+              options={selectorOptions}
+              activeValue={viewMode}
+              onChange={setViewMode}
+              compact
+            />
+          );
+
           return viewMode === 'table' ? (
             <Table
               key={i}
               rows={u.filas}
               totals={locTotals}
               title={u.nombre}
+              rightContent={selector}
             />
           ) : (
             <ChartView
               key={i}
               comparisonData={compData}
               title={u.nombre}
+              rightContent={selector}
             />
           );
         })}

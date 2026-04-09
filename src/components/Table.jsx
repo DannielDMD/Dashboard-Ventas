@@ -16,8 +16,8 @@ const Table = ({ rows, totals, title, rightContent }) => {
         </div>
       )}
       <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-slate-200">
-        <table className="w-full text-xs text-left text-slate-600 border-collapse">
-          <thead className="text-[10px] text-white uppercase bg-slate-900 sticky top-0 z-10">
+        <table className="w-full text-[16px] text-left text-slate-600 border-collapse">
+          <thead className="text-[16px] text-white uppercase bg-slate-900 sticky top-0 z-10">
             <tr>
               <th rowSpan="2" className="px-3 py-2 border-b border-r border-slate-700 min-w-[80px]">Tipo</th>
               <th rowSpan="2" className="px-3 py-2 border-b border-r border-slate-700 min-w-[120px]">Ubicación</th>
@@ -28,9 +28,9 @@ const Table = ({ rows, totals, title, rightContent }) => {
               <th colSpan="2" className="px-3 py-2 text-center border-b border-r border-slate-700">Pendientes</th>
               <th colSpan="2" className="px-3 py-2 text-center border-b border-r border-slate-700">Descartados</th>
               <th rowSpan="2" className="px-3 py-2 text-right border-b border-r border-slate-700">Oportunidad</th>
-              <th rowSpan="2" className="px-3 py-2 text-right border-b border-slate-700">Digital</th>
+              <th rowSpan="2" className="px-3 py-2 text-right border-b border-r border-slate-700">Digital</th>
             </tr>
-            <tr className="bg-slate-800 text-[9px]">
+            <tr className="bg-slate-800 text-[12px]">
               {/* Ventas */}
               <th className="px-2 py-1.5 text-right border-b border-r border-slate-700 font-medium">Con Adic.</th>
               <th className="px-2 py-1.5 text-right border-b border-r border-slate-700 font-medium">Sin Adic.</th>
@@ -59,73 +59,73 @@ const Table = ({ rows, totals, title, rightContent }) => {
               return (
                 <tr key={row.id || index} className={`${index % 2 === 0 ? 'bg-white' : 'bg-slate-50/50'} border-b border-slate-100 hover:bg-slate-100/50 transition-colors`}>
                   <td className="px-3 py-2.5 border-r border-slate-100">
-                    <span className={`px-1.5 py-0.5 rounded text-[9px] font-black uppercase tracking-wide border ${row.tipo === 'Agencias' ? 'bg-slate-50 text-purple-700 border-purple-100' : 'bg-slate-50 text-emerald-700 border-emerald-100'}`}>
+                    <span className={`px-1.5 py-0.5 rounded text-[14px] font-black uppercase tracking-wide border ${row.tipo === 'Agencias' ? 'bg-slate-50 text-purple-700 border-purple-100' : 'bg-slate-50 text-emerald-700 border-emerald-100'}`}>
                       {row.tipo}
                     </span>
                   </td>
                   <td className="px-3 py-2.5 font-bold text-slate-800 border-r border-slate-100">{row.ubicacion}</td>
-                  <td className="px-3 py-2.5 text-right font-mono font-medium border-r border-slate-100">{formatNum(row.meta)}</td>
-                  <td className="px-3 py-2.5 text-center border-r border-slate-100 font-bold">{row.servicios}</td>
+                  <td className="px-3 py-2.5 text-right font-bold border-r border-slate-100 text-slate-800">{formatNum(row.meta)}</td>
+                  <td className="px-3 py-2.5 text-center border-r border-slate-100 font-bold text-slate-800">{row.servicios}</td>
 
                   {/* Ventas */}
-                  <td className="px-2 py-2.5 text-right font-mono border-r border-slate-100 font-semibold text-slate-700">{formatNum(row.ventasAdicionales)}</td>
-                  <td className="px-2 py-2.5 text-right font-mono border-r border-slate-100 font-semibold text-slate-700">{formatNum(row.ventasSinAdicionales)}</td>
+                  <td className="px-2 py-2.5 text-right font-bold border-r border-slate-100 text-slate-800">{formatNum(row.ventasAdicionales)}</td>
+                  <td className="px-2 py-2.5 text-right font-bold border-r border-slate-100 text-slate-800">{formatNum(row.ventasSinAdicionales)}</td>
 
                   {/* Instalados */}
                   <td className="px-2 py-2.5 border-r border-slate-100">
                     <div className="flex items-center justify-end gap-1.5">
-                      <span className="font-mono font-medium">{formatNum(row.instaladoAdiciones)}</span>
-                      <span className="text-[10px] font-bold text-emerald-700 w-11 text-center leading-none tracking-tighter">{pInstCon}</span>
+                      <span className="font-bold text-slate-800">{formatNum(row.instaladoAdiciones)}</span>
+                      <span className="text-[14px] font-bold text-emerald-700 w-11 text-center leading-none tracking-tighter">{pInstCon}</span>
                     </div>
                   </td>
                   <td className="px-2 py-2.5 border-r border-slate-100">
                     <div className="flex items-center justify-end gap-1.5">
-                      <span className="font-mono font-medium">{formatNum(row.instalado)}</span>
-                      <span className="text-[10px] font-bold text-emerald-700 w-11 text-center leading-none tracking-tighter">{pInstSin}</span>
+                      <span className="font-bold text-slate-800">{formatNum(row.instalado)}</span>
+                      <span className="text-[14px] font-bold text-emerald-700 w-11 text-center leading-none tracking-tighter">{pInstSin}</span>
                     </div>
                   </td>
 
                   {/* Pendientes */}
                   <td className="px-2 py-2.5 border-r border-slate-100">
                     <div className="flex items-center justify-end gap-1.5">
-                      <span className="font-mono font-medium">{formatNum(row.pendienteAdiciones)}</span>
-                      <span className="text-[10px] font-bold text-amber-700 w-11 text-center leading-none tracking-tighter">{pPendCon}</span>
+                      <span className="font-bold text-slate-800">{formatNum(row.pendienteAdiciones)}</span>
+                      <span className="text-[14px] font-bold text-amber-700 w-11 text-center leading-none tracking-tighter">{pPendCon}</span>
                     </div>
                   </td>
                   <td className="px-2 py-2.5 border-r border-slate-100">
                     <div className="flex items-center justify-end gap-1.5">
-                      <span className="font-mono font-medium">{formatNum(row.pendiente)}</span>
-                      <span className="text-[10px] font-bold text-amber-700 w-11 text-center leading-none tracking-tighter">{pPendSin}</span>
+                      <span className="font-bold text-slate-800">{formatNum(row.pendiente)}</span>
+                      <span className="text-[14px] font-bold text-amber-700 w-11 text-center leading-none tracking-tighter">{pPendSin}</span>
                     </div>
                   </td>
 
                   {/* Descartados */}
                   <td className="px-2 py-2.5 border-r border-slate-100">
                     <div className="flex items-center justify-end gap-1.5">
-                      <span className="font-mono font-semibold text-rose-600">{formatNum(row.descartadoAdiciones)}</span>
-                      <span className="text-[10px] font-bold text-rose-700 w-11 text-center leading-none tracking-tighter">{pDescCon}</span>
+                      <span className="font-bold text-slate-800">{formatNum(row.descartadoAdiciones)}</span>
+                      <span className="text-[14px] font-bold text-rose-700 w-11 text-center leading-none tracking-tighter">{pDescCon}</span>
                     </div>
                   </td>
                   <td className="px-2 py-2.5 border-r border-slate-100">
                     <div className="flex items-center justify-end gap-1.5">
-                      <span className="font-mono font-semibold text-rose-600">{formatNum(row.descartado)}</span>
-                      <span className="text-[10px] font-bold text-rose-700 w-11 text-center leading-none tracking-tighter">{pDescSin}</span>
+                      <span className="font-bold text-slate-800">{formatNum(row.descartado)}</span>
+                      <span className="text-[14px] font-bold text-rose-700 w-11 text-center leading-none tracking-tighter">{pDescSin}</span>
                     </div>
                   </td>
 
                   {/* Oportunidad */}
                   <td className="px-2 py-2.5 border-r border-slate-100">
                     <div className="flex items-center justify-end gap-1.5 text-blue-800">
-                      <span className="font-mono font-bold">{formatNum(row.oportunidad)}</span>
-                      <span className="text-[10px] font-bold text-blue-800 w-11 text-center leading-none">{pOport}</span>
+                      <span className="font-bold text-slate-800">{formatNum(row.oportunidad)}</span>
+                      <span className="text-[14px] font-bold text-blue-800 w-11 text-center leading-none">{pOport}</span>
                     </div>
                   </td>
 
                   {/* Digital */}
                   <td className="px-2 py-2.5 border-r border-slate-100">
                     <div className="flex items-center justify-end gap-1.5 text-indigo-800">
-                      <span className="font-mono font-bold">{formatNum(row.digital)}</span>
-                      <span className="text-[10px] font-bold text-indigo-800 w-11 text-center leading-none">{pDigit}</span>
+                      <span className="font-bold text-slate-800">{formatNum(row.digital)}</span>
+                      <span className="text-[14px] font-bold text-indigo-800 w-11 text-center leading-none">{pDigit}</span>
                     </div>
                   </td>
                 </tr>
@@ -133,25 +133,25 @@ const Table = ({ rows, totals, title, rightContent }) => {
             })}
           </tbody>
           {totals && (
-            <tfoot className="bg-slate-900 text-white font-mono text-[11px]">
+            <tfoot className="bg-slate-900 text-white font-mono text-[16px]">
               <tr className="divide-x divide-slate-700 border-t-2 border-slate-700">
                 <td colSpan="2" className="px-3 py-3 font-black text-center tracking-widest leading-none">TOTAL</td>
                 <td className="px-3 py-3 text-right">{formatNum(totals.meta)}</td>
                 <td className="px-3 py-3 text-center font-bold">{totals.servicios}</td>
                 <td className="px-2 py-3 text-right font-bold">{formatNum(totals.ventasAdicionales)}</td>
                 <td className="px-2 py-3 text-right font-bold">{formatNum(totals.ventasSinAdicionales)}</td>
-                
+
                 {/* Instalados Total */}
                 <td className="px-2 py-3">
                   <div className="flex items-center justify-end gap-1.5">
                     <span>{formatNum(totals.instaladoAdiciones)}</span>
-                    <span className="text-[10px] font-bold text-emerald-400 w-11 text-center leading-none">{totals.porcInstaladoConAdic}</span>
+                    <span className="text-[14px] font-bold text-emerald-400 w-11 text-center leading-none">{totals.porcInstaladoConAdic}</span>
                   </div>
                 </td>
                 <td className="px-2 py-3">
                   <div className="flex items-center justify-end gap-1.5">
                     <span>{formatNum(totals.instalado)}</span>
-                    <span className="text-[10px] font-bold text-emerald-400 w-11 text-center leading-none">{totals.porcInstaladoSinAdic}</span>
+                    <span className="text-[14px] font-bold text-emerald-400 w-11 text-center leading-none">{totals.porcInstaladoSinAdic}</span>
                   </div>
                 </td>
 
@@ -159,13 +159,13 @@ const Table = ({ rows, totals, title, rightContent }) => {
                 <td className="px-2 py-3">
                   <div className="flex items-center justify-end gap-1.5">
                     <span>{formatNum(totals.pendienteAdiciones)}</span>
-                    <span className="text-[10px] font-bold text-amber-400 w-11 text-center leading-none">{totals.porcPendienteConAdic}</span>
+                    <span className="text-[14px] font-bold text-amber-400 w-11 text-center leading-none">{totals.porcPendienteConAdic}</span>
                   </div>
                 </td>
                 <td className="px-2 py-3">
                   <div className="flex items-center justify-end gap-1.5">
                     <span>{formatNum(totals.pendiente)}</span>
-                    <span className="text-[10px] font-bold text-amber-400 w-11 text-center leading-none">{totals.porcPendienteSinAdic}</span>
+                    <span className="text-[14px] font-bold text-amber-400 w-11 text-center leading-none">{totals.porcPendienteSinAdic}</span>
                   </div>
                 </td>
 
@@ -173,13 +173,13 @@ const Table = ({ rows, totals, title, rightContent }) => {
                 <td className="px-2 py-3">
                   <div className="flex items-center justify-end gap-1.5">
                     <span className="text-white/90">{formatNum(totals.descartadoAdiciones)}</span>
-                    <span className="text-[10px] font-bold text-rose-400 w-11 text-center leading-none">{totals.porcDescartadoConAdic}</span>
+                    <span className="text-[14px] font-bold text-rose-400 w-11 text-center leading-none">{totals.porcDescartadoConAdic}</span>
                   </div>
                 </td>
                 <td className="px-2 py-3">
                   <div className="flex items-center justify-end gap-1.5">
                     <span className="text-white/90">{formatNum(totals.descartado)}</span>
-                    <span className="text-[10px] font-bold text-rose-400 w-11 text-center leading-none">{totals.porcDescartadoSinAdic}</span>
+                    <span className="text-[14px] font-bold text-rose-400 w-11 text-center leading-none">{totals.porcDescartadoSinAdic}</span>
                   </div>
                 </td>
 
@@ -187,7 +187,7 @@ const Table = ({ rows, totals, title, rightContent }) => {
                 <td className="px-2 py-3">
                   <div className="flex items-center justify-end gap-1.5">
                     <span className="text-white/90">{formatNum(totals.oportunidad)}</span>
-                    <span className="text-[10px] font-bold text-blue-400 w-11 text-center leading-none">{totals.porcOportunidad}</span>
+                    <span className="text-[14px] font-bold text-blue-400 w-11 text-center leading-none">{totals.porcOportunidad}</span>
                   </div>
                 </td>
 
@@ -195,7 +195,7 @@ const Table = ({ rows, totals, title, rightContent }) => {
                 <td className="px-2 py-3">
                   <div className="flex items-center justify-end gap-1.5">
                     <span className="text-white/90">{formatNum(totals.digital)}</span>
-                    <span className="text-[10px] font-bold text-indigo-400 w-11 text-center leading-none">{totals.porcDigital}</span>
+                    <span className="text-[14px] font-bold text-indigo-400 w-11 text-center leading-none">{totals.porcDigital}</span>
                   </div>
                 </td>
               </tr>
