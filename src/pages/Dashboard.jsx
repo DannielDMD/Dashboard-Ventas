@@ -34,7 +34,7 @@ const Dashboard = () => {
     }, []);
 
     return (
-        <div className="min-h-screen bg-[#f8fafc] text-slate-800 font-sans pb-32">
+        <div className="min-h-screen bg-[#f8fafc] text-slate-800 font-sans pb-12 md:pb-8">
             {/* Header Premium */}
 
             {/*
@@ -69,15 +69,15 @@ const Dashboard = () => {
 
 */}
             {/* Main Container */}
-            <main className="max-w-[1500px] mx-auto px-8 py-12">
+            <main className="max-w-[98%] 2xl:max-w-[1800px] mx-auto px-4 md:px-6 lg:px-4 py-8 md:py-6">
 
                 {/* SECCIÓN 1: GENERAL COLOMBIA */}
-                <section className="mb-10">
+                <section className="mb-6 lg:mb-5">
                     <CardGroup totals={globalTotals} title="General Colombia" />
                 </section>
 
                 {/* SECCIÓN BOGOTÁ (Consolida G1 y G2) */}
-                <section className="mb-10 space-y-4">
+                <section className="mb-6 lg:mb-5 space-y-4">
                     {dashboardData.filter(s => s.id === 'g1' || s.id === 'g2').map((section) => (
                         <TableSection key={section.id} sectionData={section} showSummary={false} />
                     ))}
@@ -87,7 +87,7 @@ const Dashboard = () => {
                 </section>
 
                 {/* SECCIÓN DINÁMICA (MEDELLÍN, REGIONALES, ETC.) */}
-                <section className="space-y-10">
+                <section className="space-y-6 lg:space-y-5">
                     {dashboardData.filter(s => s.id !== 'g1' && s.id !== 'g2').map((section) => (
                         <TableSection key={section.id} sectionData={section} />
                     ))}

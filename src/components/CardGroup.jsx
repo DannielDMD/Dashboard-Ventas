@@ -62,7 +62,7 @@ const CardGroup = ({ totals, comparisonData, title = "Resumen de Métricas" }) =
   );
 
   return (
-    <div className="bg-white rounded-[1.5rem] p-4 border border-slate-200 shadow-[0_10px_30px_-15px_rgba(0,0,0,0.05)] space-y-4">
+    <div className="bg-white rounded-[1.5rem] p-4 lg:p-5 lg:px-6 border border-slate-200 shadow-[0_10px_30px_-15px_rgba(0,0,0,0.05)] space-y-4 lg:space-y-3">
       {/* Header Interno Compacto */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-slate-100 pb-3">
         <div>
@@ -78,7 +78,7 @@ const CardGroup = ({ totals, comparisonData, title = "Resumen de Métricas" }) =
       </div>
 
       {viewMode === 'cards' ? (
-        <div className="space-y-6">
+        <div className="space-y-5 lg:space-y-4">
           {/* Tarjeta de Meta Única Compacta */}
           <div className="flex justify-start">
             <div className="w-32">
