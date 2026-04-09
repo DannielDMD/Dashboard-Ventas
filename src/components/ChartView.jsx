@@ -127,7 +127,7 @@ const ChartView = ({ comparisonData, title, rightContent }) => {
 
         {/* Gráfica A: Ventas */}
         <div className="bg-white p-4 rounded-xl border border-slate-200 flex flex-col">
-          <h4 className="text-[16px] text-graph-sub mb-4">Comparativa de Ventas</h4>
+          <h4 className="text-[16px] font-black text-slate-900 mb-4 uppercase tracking-tight">Comparativa de Ventas</h4>
           <div className="h-[220px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={dataVentas} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
@@ -146,7 +146,7 @@ const ChartView = ({ comparisonData, title, rightContent }) => {
 
         {/* Gráfica B: Instalación vs Pendiente */}
         <div className="bg-white p-4 rounded-xl border border-slate-200 flex flex-col">
-          <h4 className="text-[16px] text-graph-sub mb-4">Instalados vs Pendientes</h4>
+          <h4 className="text-[16px] font-black text-slate-900 mb-4 uppercase tracking-tight">Eficiencia de Instalación</h4>
           <div className="h-[220px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={dataInstalacion} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
@@ -166,7 +166,7 @@ const ChartView = ({ comparisonData, title, rightContent }) => {
 
         {/* Gráfica C: Servicios */}
         <div className="bg-white p-4 rounded-xl border border-slate-200 flex flex-col">
-          <h4 className="text-[16px] text-graph-sub mb-4">Volumen de Servicios</h4>
+          <h4 className="text-[16px] font-black text-slate-900 mb-4 uppercase tracking-tight">Volumen de Servicios</h4>
           <div className="h-[220px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={dataServicios} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>

@@ -140,7 +140,7 @@ const CardGroupChart = ({ totals, rightContent }) => {
 
         {/* Gráfica A: Meta vs Ventas */}
         <div className="bg-white p-4 rounded-xl border border-slate-200 flex flex-col">
-          <h4 className="text-[16px] text-graph-sub mb-4">Meta vs Ventas</h4>
+          <h4 className="text-[16px] font-black text-slate-900 mb-4 uppercase tracking-tight">Meta vs Ventas</h4>
           <div className="h-[200px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={dataMetaVentas} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
@@ -159,7 +159,7 @@ const CardGroupChart = ({ totals, rightContent }) => {
 
         {/* Gráfica B: Instalado vs Pendiente */}
         <div className="bg-white p-4 rounded-xl border border-slate-200 flex flex-col">
-          <h4 className="text-[16px] text-graph-sub mb-4">Eficiencia de Instalación</h4>
+          <h4 className="text-[16px] font-black text-slate-900 mb-4 uppercase tracking-tight"> Eficiencia de Instalación</h4>
           <div className="h-[200px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={dataInstalacion} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
@@ -177,7 +177,7 @@ const CardGroupChart = ({ totals, rightContent }) => {
 
         {/* Gráfica C: Oportunidad vs Digital */}
         <div className="bg-white p-4 rounded-xl border border-slate-200 flex flex-col">
-          <h4 className="text-[16px] text-graph-sub mb-4">Oportunidad vs Digital</h4>
+          <h4 className="text-[16px] font-black text-slate-900 mb-4 uppercase tracking-tight">Oportunidad vs Digital</h4>
           <div className="h-[200px] w-full flex-1">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
@@ -204,7 +204,7 @@ const CardGroupChart = ({ totals, rightContent }) => {
 
         {/* Gráfica D: Servicios vs Descartado */}
         <div className="bg-white p-4 rounded-xl border border-slate-200">
-          <h4 className="text-[16px] text-graph-sub mb-4">Servicios & Descartados</h4>
+          <h4 className="text-[16px] font-black text-slate-900 mb-4 uppercase tracking-tight">Servicios & Descartados</h4>
           <div className="h-[200px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={dataServDesc} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
