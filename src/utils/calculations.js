@@ -36,14 +36,14 @@ export const calculateTotals = (rows) => {
     }
   );
 
-  totals.porcInstaladoConAdic = calcPercentage(totals.instaladoAdiciones, totals.ventasAdicionales);
-  totals.porcInstaladoSinAdic = calcPercentage(totals.instalado, totals.ventasSinAdicionales);
-  totals.porcPendienteConAdic = calcPercentage(totals.pendienteAdiciones, totals.ventasAdicionales);
-  totals.porcPendienteSinAdic = calcPercentage(totals.pendiente, totals.ventasSinAdicionales);
-  totals.porcDescartadoConAdic = calcPercentage(totals.descartadoAdiciones, totals.ventasAdicionales);
-  totals.porcDescartadoSinAdic = calcPercentage(totals.descartado, totals.ventasSinAdicionales);
-  totals.porcOportunidad = calcPercentage(totals.oportunidad, totals.ventasSinAdicionales);
-  totals.porcDigital = calcPercentage(totals.digital, totals.ventasSinAdicionales);
+  totals.porcInstaladoConAdic = calcPercentage(totals.instaladoAdiciones, totals.meta);
+  totals.porcInstaladoSinAdic = calcPercentage(totals.instalado, totals.meta);
+  totals.porcPendienteConAdic = calcPercentage(totals.pendienteAdiciones, totals.meta);
+  totals.porcPendienteSinAdic = calcPercentage(totals.pendiente, totals.meta);
+  totals.porcDescartadoConAdic = calcPercentage(totals.descartadoAdiciones, totals.meta);
+  totals.porcDescartadoSinAdic = calcPercentage(totals.descartado, totals.meta);
+  totals.porcOportunidad = calcPercentage(totals.oportunidad, totals.meta);
+  totals.porcDigital = calcPercentage(totals.digital, totals.meta);
 
   return totals;
 };

@@ -47,14 +47,14 @@ const Table = ({ rows, totals, title, rightContent }) => {
           </thead>
           <tbody>
             {rows.map((row, index) => {
-              const pInstCon = calcPercentage(row.instaladoAdiciones, row.ventasAdicionales);
-              const pInstSin = calcPercentage(row.instalado, row.ventasSinAdicionales);
-              const pPendCon = calcPercentage(row.pendienteAdiciones, row.ventasAdicionales);
-              const pPendSin = calcPercentage(row.pendiente, row.ventasSinAdicionales);
-              const pDescCon = calcPercentage(row.descartadoAdiciones, row.ventasAdicionales);
-              const pDescSin = calcPercentage(row.descartado, row.ventasSinAdicionales);
-              const pOport = calcPercentage(row.oportunidad, row.ventasSinAdicionales);
-              const pDigit = calcPercentage(row.digital, row.ventasSinAdicionales);
+              const pInstCon = calcPercentage(row.instaladoAdiciones, row.meta);
+              const pInstSin = calcPercentage(row.instalado, row.meta);
+              const pPendCon = calcPercentage(row.pendienteAdiciones, row.meta);
+              const pPendSin = calcPercentage(row.pendiente, row.meta);
+              const pDescCon = calcPercentage(row.descartadoAdiciones, row.meta);
+              const pDescSin = calcPercentage(row.descartado, row.meta);
+              const pOport = calcPercentage(row.oportunidad, row.meta);
+              const pDigit = calcPercentage(row.digital, row.meta);
 
               return (
                 <tr key={row.id || index} className={`${index % 2 === 0 ? 'bg-white' : 'bg-slate-50/50'} border-b border-slate-100 hover:bg-slate-100/50 transition-colors`}>

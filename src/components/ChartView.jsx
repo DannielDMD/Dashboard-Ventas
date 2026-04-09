@@ -43,7 +43,6 @@ const ChartView = ({ totals, comparisonData, title, rightContent }) => {
         Meta: d.meta,
         'V. con Adic.': d.ventasAdicionales,
         'V. sin Adic.': d.ventasSinAdicionales,
-        Ventas: d.ventasAdicionales + d.ventasSinAdicionales,
         Instalado: d.instalado,
         Pendiente: d.pendiente
     }));
@@ -51,9 +50,10 @@ const ChartView = ({ totals, comparisonData, title, rightContent }) => {
     barData = [{
         name: 'Gral',
         Meta: currentTotals.meta,
+        'V. con Adic.': currentTotals.ventasAdicionales,
+        'V. sin Adic.': currentTotals.ventasSinAdicionales,
         Instalado: currentTotals.instalado,
         Pendiente: currentTotals.pendiente,
-        Ventas: currentTotals.ventasAdicionales + currentTotals.ventasSinAdicionales
     }];
   }
 
@@ -97,7 +97,8 @@ const ChartView = ({ totals, comparisonData, title, rightContent }) => {
                 />
                 <Legend verticalAlign="top" iconType="circle" iconSize={8} wrapperStyle={{ fontSize: '9px', paddingBottom: '10px' }} />
                 <Bar name="Meta" dataKey="Meta" fill={COMPARISON_COLORS.Meta} radius={[3, 3, 0, 0]} barSize={isComparative ? 20 : 35} />
-                <Bar name="Ventas" dataKey="Ventas" fill={COMPARISON_COLORS.Ventas} radius={[3, 3, 0, 0]} barSize={isComparative ? 20 : 35} />
+                <Bar name="V. con Adic." dataKey="V. con Adic." fill="#6366f1" radius={[3, 3, 0, 0]} barSize={isComparative ? 10 : 20} />
+                <Bar name="V. sin Adic." dataKey="V. sin Adic." fill={COMPARISON_COLORS.Ventas} radius={[3, 3, 0, 0]} barSize={isComparative ? 10 : 20} />
               </BarChart>
             </ResponsiveContainer>
           </div>

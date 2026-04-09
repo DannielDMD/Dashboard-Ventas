@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Card from './Card';
-import ChartView from './ChartView';
+import CardGroupChart from './CardGroupChart';
 import ViewSelector from './ViewSelector';
 import { calcPercentage } from '../utils/calculations';
 
@@ -113,8 +113,8 @@ const CardGroup = ({ totals, comparisonData, title = "Resumen de Métricas" }) =
           }, true)}
         </div>
       ) : (
-        <div className="bg-slate-50/50 rounded-2xl p-2 border border-slate-100">
-          <ChartView totals={totals} comparisonData={comparisonData} title={title} />
+        <div className="bg-slate-50/50 rounded-2xl p-4 border border-slate-100">
+          <CardGroupChart totals={totals} />
         </div>
       )}
     </div>
