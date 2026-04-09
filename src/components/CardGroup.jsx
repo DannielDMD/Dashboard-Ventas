@@ -65,18 +65,18 @@ const CardGroup = ({ totals, comparisonData, title = "Resumen de Métricas" }) =
   );
 
   return (
-    <div className="bg-white rounded-[1.5rem] p-4 lg:p-6 border border-slate-200 shadow-[0_15px_40px_-20px_rgba(0,0,0,0.08)] space-y-6">
+    <div className="bg-white rounded-2xl p-4 border border-slate-200 space-y-4">
       {/* Header Interno Compacto */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-5">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-3">
         {/* Izquierda: Título y Tarjeta Meta */}
-        <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8 flex-1">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 flex-1">
           <div>
-            <h3 className="text-xl md:text-2xl font-black text-slate-900 tracking-tight leading-tight">{title}</h3>
-            <p className="text-dashboard-label mt-1">Monitoreo de Objetivos</p>
+            <h3 className="text-lg md:text-xl font-black text-slate-900 tracking-tight leading-tight uppercase">{title}</h3>
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">Monitoreo</p>
           </div>
 
           {viewMode === 'cards' && (
-            <div className="w-36 md:w-40">
+            <div className="w-32 md:w-36">
               <Card label="META" value={totals.meta} type="meta" />
             </div>
           )}
@@ -88,12 +88,13 @@ const CardGroup = ({ totals, comparisonData, title = "Resumen de Métricas" }) =
             options={selectorOptions}
             activeValue={viewMode}
             onChange={setViewMode}
+            compact
           />
         </div>
       </div>
 
       {viewMode === 'cards' ? (
-        <div className="space-y-8 lg:space-y-10 pt-2">
+        <div className="space-y-6 pt-1">
 
           {/* Sección Con Adicionales */}
           {renderMetricSection("Con Adicionales", {

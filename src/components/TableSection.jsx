@@ -37,53 +37,53 @@ const TableSection = ({ sectionData, showSummary = true }) => {
   ];
 
   return (
-    <div className="mb-6 p-4 sm:p-5 lg:p-6 xl:p-8 bg-white/40 rounded-3xl border border-gray-200/50 shadow-sm">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-        <div className="flex items-center gap-4">
-          <div className="w-3 h-8 bg-blue-600 rounded-full shadow-lg shadow-blue-200"></div>
-          <h3 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tight">{nombre}</h3>
-        </div>
-
-        <ViewSelector
-          options={selectorOptions}
-          activeValue={viewMode}
-          onChange={setViewMode}
-        />
-      </div>
-
+    <div className="space-y-4">
       {/* Contenido Dinámico */}
-      <div className="space-y-4 lg:space-y-5">
-        {ubicaciones.map((u, i) => {
-          const locTotals = calculateTotals(u.filas);
+      {ubicaciones.map((u, i) => {
+        const locTotals = calculateTotals(u.filas);
 
-          // Datos comparativos: Agencias vs Directos
-          const agenciasRows = u.filas.filter(r => r.tipo === 'Agencias');
-          const directosRows = u.filas.filter(r => r.tipo === 'Directos');
-          const compData = [
-            { ...calculateTotals(agenciasRows), name: 'Agencias' },
-            { ...calculateTotals(directosRows), name: 'Directos' }
-          ];
+        // Datos comparativos: Agencias vs Directos
+        const agenciasRows = u.filas.filter(r => r.tipo === 'Agencias');
+        const directosRows = u.filas.filter(r => r.tipo === 'Directos');
+        const compData = [
+          { ...calculateTotals(agenciasRows), name: 'Agencias' },
+          { ...calculateTotals(directosRows), name: 'Directos' }
+        ];
 
-          return viewMode === 'table' ? (
-            <Table
-              key={i}
-              rows={u.filas}
-              totals={locTotals}
-              title={u.nombre}
-            />
-          ) : (
-            <ChartView
-              key={i}
-              comparisonData={compData}
-              title={u.nombre}
-            />
-          );
-        })}
-      </div>
+        // Título: Si es la primera tabla de una sección, combinamos el nombre de la sección con el de la ubicación
+        const displayTitle = i === 0 ? `${nombre}: ${u.nombre}` : u.nombre;
+        
+        // El selector solo se muestra en la primera tabla/gráfica de la sección
+        const selector = i === 0 ? (
+          <ViewSelector
+            options={selectorOptions}
+            activeValue={viewMode}
+            onChange={setViewMode}
+            compact
+          />
+        ) : null;
 
-      {/* Resumen de la sección completa (Solo si showSummary es true) */}
+        return viewMode === 'table' ? (
+          <Table
+            key={i}
+            rows={u.filas}
+            totals={locTotals}
+            title={displayTitle}
+            rightContent={selector}
+          />
+        ) : (
+          <ChartView
+            key={i}
+            comparisonData={compData}
+            title={displayTitle}
+            rightContent={selector}
+          />
+        );
+      })}
+
+      {/* Resumen de la sección completa */}
       {showSummary && (
-        <div className="mt-8 pt-6 lg:mt-6 lg:pt-5 border-t border-gray-200/50">
+        <div className="pt-2 border-t border-gray-200/50">
           <CardGroup totals={sectionTotals} comparisonData={sectionComparisonData} title={`${nombre} Total`} />
         </div>
       )}

@@ -25,7 +25,7 @@ const COMPARISON_COLORS = {
   'Pendiente': '#f59e0b',
 };
 
-const ChartView = ({ totals, comparisonData, title }) => {
+const ChartView = ({ totals, comparisonData, title, rightContent }) => {
   const isComparative = comparisonData && comparisonData.length > 0;
   const currentTotals = totals || (isComparative ? comparisonData.reduce((acc, curr) => {
     Object.keys(curr).forEach(key => {
@@ -68,21 +68,16 @@ const ChartView = ({ totals, comparisonData, title }) => {
   ];
 
   return (
-    <div className="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm transition-all duration-300">
+    <div className="bg-white rounded-2xl p-4 border border-gray-100 transition-all duration-300">
       {/* Header Compacto */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-4 border-b border-slate-50 pb-3">
-        <div>
-          <h4 className="text-sm font-black text-slate-800 flex items-center gap-1.5 uppercase tracking-tight">
-            <span className="w-2 h-2 bg-blue-600 rounded-full"></span>
-            Charts: {title}
+      <div className="flex items-center justify-between mb-5 px-1 border-b border-slate-50 pb-4">
+        <div className="flex items-center gap-3">
+          <div className="w-1.5 h-5 bg-slate-400 rounded-full"></div>
+          <h4 className="text-base md:text-lg font-black text-slate-900 tracking-tight uppercase">
+            {title}
           </h4>
         </div>
-        {currentTotals.porcInstaladoSinAdic && (
-          <div className="bg-emerald-50 px-3 py-1 rounded-lg border border-emerald-100/50 flex gap-2 items-center">
-            <span className="text-[8px] font-black text-emerald-500 uppercase tracking-widest leading-none">Eficiencia</span>
-            <span className="text-sm font-black text-emerald-700 leading-none">{currentTotals.porcInstaladoSinAdic}</span>
-          </div>
-        )}
+        {rightContent && <div>{rightContent}</div>}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">

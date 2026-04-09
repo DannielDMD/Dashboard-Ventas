@@ -5,58 +5,58 @@ const Card = ({ label, value, type = 'default', percentageValue }) => {
     switch (type) {
       case 'ventas':
         return {
-          container: 'bg-white border-slate-200',
-          label: 'text-black',
-          value: 'text-blue-700',
+          container: 'bg-white border-slate-200 border-t-4 border-t-blue-500',
+          label: 'text-slate-1000',
+          value: 'text-black',
           percent: 'text-blue-600'
         };
       case 'instalado':
         return {
-          container: 'bg-white border-slate-200',
-          label: 'text-black',
-          value: 'text-emerald-700',
+          container: 'bg-white border-slate-200 border-t-4 border-t-emerald-500',
+          label: 'text-slate-1000',
+          value: 'text-black',
           percent: 'text-emerald-600'
         };
       case 'pendiente':
         return {
-          container: 'bg-white border-slate-200',
-          label: 'text-black',
-          value: 'text-amber-700',
+          container: 'bg-white border-slate-200 border-t-4 border-t-amber-500',
+          label: 'text-slate-1000',
+          value: 'text-black',
           percent: 'text-amber-600'
         };
       case 'descartado':
         return {
-          container: 'bg-white border-slate-200',
-          label: 'text-black',
-          value: 'text-rose-700',
+          container: 'bg-white border-slate-200 border-t-4 border-t-rose-500',
+          label: 'text-slate-1000',
+          value: 'text-black',
           percent: 'text-rose-600'
         };
       case 'oportunidad':
         return {
-          container: 'bg-white border-slate-200',
-          label: 'text-black',
-          value: 'text-purple-700',
+          container: 'bg-white border-slate-200 border-t-4 border-t-purple-500',
+          label: 'text-slate-1000',
+          value: 'text-black',
           percent: 'text-purple-600'
         };
       case 'digital':
         return {
-          container: 'bg-white border-slate-200',
-          label: 'text-black',
-          value: 'text-cyan-700',
+          container: 'bg-white border-slate-200 border-t-4 border-t-cyan-500',
+          label: 'text-slate-1000',
+          value: 'text-black',
           percent: 'text-cyan-600'
         };
       case 'meta':
         return {
-          container: 'bg-indigo-50 border-indigo-200 shadow-sm shadow-indigo-100',
-          label: 'text-indigo-900',
-          value: 'text-indigo-700',
-          percent: 'text-indigo-600/70'
+          container: 'bg-slate-50 border-slate-300 border-t-4 border-t-slate-800',
+          label: 'text-slate-1000',
+          value: 'text-black',
+          percent: 'text-slate-500'
         };
       default:
         return {
-          container: 'bg-white border-slate-200',
-          label: 'text-black',
-          value: 'text-slate-900',
+          container: 'bg-white border-slate-200 border-t-4 border-t-slate-400',
+          label: 'text-slate-1000',
+          value: 'text-black',
           percent: 'text-slate-600'
         };
     }

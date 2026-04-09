@@ -1,15 +1,18 @@
 import React from 'react';
 import { calcPercentage } from '../utils/calculations';
 
-const Table = ({ rows, totals, title }) => {
+const Table = ({ rows, totals, title, rightContent }) => {
   const formatNum = (val) => (val || 0).toLocaleString('es-CO');
 
   return (
     <div className="mb-6 p-4 bg-white rounded-2xl border border-slate-100 overflow-hidden">
       {title && (
-        <div className="flex items-center gap-3 mb-5 px-1">
-          <div className="w-1.5 h-5 bg-slate-300 rounded-full"></div>
-          <h4 className="text-base md:text-lg font-extrabold text-slate-800 tracking-tight">{title}</h4>
+        <div className="flex items-center justify-between mb-5 px-1">
+          <div className="flex items-center gap-3">
+            <div className="w-1.5 h-5 bg-slate-400 rounded-full"></div>
+            <h4 className="text-base md:text-lg font-black text-slate-900 tracking-tight uppercase">{title}</h4>
+          </div>
+          {rightContent && <div>{rightContent}</div>}
         </div>
       )}
       <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-slate-200">
