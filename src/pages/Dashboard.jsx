@@ -3,22 +3,31 @@ import TableSection from '../components/TableSection';
 import CardGroup from '../components/CardGroup';
 import ChartView from '../components/ChartView';
 import CollapsibleSection from '../components/CollapsibleSection';
-import { dashboardData } from '../data/mockData';
 import { calculateTotals } from '../utils/calculations';
+import { useDashboardData } from '../hooks/useDashboardData';
+import DashboardSkeleton from '../components/shared/LoadingSkeleton';
+import ErrorDisplay from '../components/shared/ErrorDisplay';
 
 const Dashboard = () => {
+    const { data, loading, error, retry } = useDashboardData();
+
     // 1. Totales Generales (Colombia) Dinámicos
     const globalTotals = useMemo(() => {
-        const allRows = dashboardData.flatMap(section =>
+        if (!data) return null;
+        const allRows = data.flatMap(section =>
             section.ubicaciones.flatMap(u => u.filas)
         );
         return calculateTotals(allRows);
-    }, []);
+    }, [data]);
 
     // 2. Totales Combinados de Bogotá (Grupo 1 + Grupo 2)
-    const { bogotaCombinedTotals, bogotaComparisonData } = useMemo(() => {
-        const sectionG1 = dashboardData.find(s => s.id === 'g1');
-        const sectionG2 = dashboardData.find(s => s.id === 'g2');
+    const bogotaCalculations = useMemo(() => {
+        if (!data) return { bogotaCombinedTotals: null, bogotaComparisonData: [] };
+        
+        const sectionG1 = data.find(s => s.id === 'g1');
+        const sectionG2 = data.find(s => s.id === 'g2');
+
+        if (!sectionG1 || !sectionG2) return { bogotaCombinedTotals: null, bogotaComparisonData: [] };
 
         const rowsG1 = sectionG1.ubicaciones.flatMap(u => u.filas);
         const rowsG2 = sectionG2.ubicaciones.flatMap(u => u.filas);
@@ -33,7 +42,9 @@ const Dashboard = () => {
                 { ...totG2, name: 'Grupo 2' }
             ]
         };
-    }, []);
+    }, [data]);
+
+    const { bogotaCombinedTotals, bogotaComparisonData } = bogotaCalculations;
 
     return (
         <div className="min-h-screen bg-[#f8fafc] text-slate-800 font-sans pb-12 md:pb-8">
@@ -72,33 +83,41 @@ const Dashboard = () => {
 */}
             {/* Main Container */}
             <main className="max-w-[98%] 2xl:max-w-[1800px] mx-auto px-4 md:px-6 lg:px-4 py-8 md:py-6">
+                
+                {loading && <DashboardSkeleton />}
 
-                {/* SECCIÓN 1: GENERAL COLOMBIA */}
-                <section className="mb-6 lg:mb-5">
-                    <CardGroup totals={globalTotals} title="General Colombia" />
-                </section>
+                {error && <ErrorDisplay message={error.message} onRetry={retry} />}
 
-                {/* SECCIÓN BOGOTÁ (Consolida G1 y G2) */}
-                <section className="mb-6 lg:mb-5 space-y-4">
-                    {dashboardData.filter(s => s.id === 'g1' || s.id === 'g2').map((section) => (
-                        <TableSection key={section.id} sectionData={section} showSummary={false} />
-                    ))}
+                {!loading && !error && data && (
+                    <>
+                        {/* SECCIÓN 1: GENERAL COLOMBIA */}
+                        <section className="mb-6 lg:mb-5">
+                            <CardGroup totals={globalTotals} title="General Colombia" />
+                        </section>
 
-                    {/* Resumen y Comparativa de Bogotá Colapsable */}
-                    <CollapsibleSection title="Consolidado Bogotá (G1 + G2)" subtitle="Comparativa Operativa y Totales" iconColor="bg-blue-600">
-                        <div className="space-y-6">
-                            <ChartView comparisonData={bogotaComparisonData} title="Comparativa Grupo 1 vs Grupo 2" />
-                            <CardGroup totals={bogotaCombinedTotals} comparisonData={bogotaComparisonData} title="Totales Bogotá" />
-                        </div>
-                    </CollapsibleSection>
-                </section>
+                        {/* SECCIÓN BOGOTÁ (Consolida G1 y G2) */}
+                        <section className="mb-6 lg:mb-5 space-y-4">
+                            {data.filter(s => s.id === 'g1' || s.id === 'g2').map((section) => (
+                                <TableSection key={section.id} sectionData={section} showSummary={false} />
+                            ))}
 
-                {/* SECCIÓN DINÁMICA (MEDELLÍN, REGIONALES, ETC.) */}
-                <section className="space-y-6 lg:space-y-5">
-                    {dashboardData.filter(s => s.id !== 'g1' && s.id !== 'g2').map((section) => (
-                        <TableSection key={section.id} sectionData={section} />
-                    ))}
-                </section>
+                            {/* Resumen y Comparativa de Bogotá Colapsable */}
+                            <CollapsibleSection title="Consolidado Bogotá (G1 + G2)" subtitle="Comparativa Operativa y Totales" iconColor="bg-blue-600">
+                                <div className="space-y-6">
+                                    <ChartView comparisonData={bogotaComparisonData} title="Comparativa Grupo 1 vs Grupo 2" />
+                                    <CardGroup totals={bogotaCombinedTotals} comparisonData={bogotaComparisonData} title="Totales Bogotá" />
+                                </div>
+                            </CollapsibleSection>
+                        </section>
+
+                        {/* SECCIÓN DINÁMICA (MEDELLÍN, REGIONALES, ETC.) */}
+                        <section className="space-y-6 lg:space-y-5">
+                            {data.filter(s => s.id !== 'g1' && s.id !== 'g2').map((section) => (
+                                <TableSection key={section.id} sectionData={section} />
+                            ))}
+                        </section>
+                    </>
+                )}
             </main>
         </div>
 

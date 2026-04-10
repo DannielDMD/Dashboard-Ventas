@@ -27,35 +27,35 @@ const CardGroup = ({ totals, comparisonData, title = "Resumen de Métricas" }) =
         <Card label="Cantidad" value={data.servicios} />
         <Card label="Venta" value={data.venta} type="ventas" />
 
-        <Card 
-          label="Instalado" 
-          value={data.instalado} 
-          type="instalado" 
-          percentageValue={calcPercentage(data.instalado, totals.meta)} 
+        <Card
+          label="Instalado"
+          value={data.instalado}
+          type="instalado"
+          percentageValue={calcPercentage(data.instalado, totals.meta)}
         />
-        <Card 
-          label="Pendiente" 
-          value={data.pendiente} 
-          type="pendiente" 
-          percentageValue={calcPercentage(data.pendiente, totals.meta)} 
+        <Card
+          label="Pendiente"
+          value={data.pendiente}
+          type="pendiente"
+          percentageValue={calcPercentage(data.pendiente, totals.meta)}
         />
-        <Card 
-          label="Descartado" 
-          value={data.descartado} 
-          type="descartado" 
-          percentageValue={calcPercentage(data.descartado, totals.meta)} 
+        <Card
+          label="Descartado"
+          value={data.descartado}
+          type="descartado"
+          percentageValue={calcPercentage(data.descartado, totals.meta)}
         />
-        <Card 
-          label="Oportunidad" 
-          value={totals.oportunidad} 
-          type="oportunidad" 
-          percentageValue={calcPercentage(totals.oportunidad, totals.meta)} 
+        <Card
+          label="Oportunidad"
+          value={totals.oportunidad}
+          type="oportunidad"
+          percentageValue={calcPercentage(totals.oportunidad, totals.meta)}
         />
-        <Card 
-          label="Digital" 
-          value={totals.digital} 
-          type="digital" 
-          percentageValue={calcPercentage(totals.digital, totals.meta)} 
+        <Card
+          label="Digital"
+          value={totals.digital}
+          type="digital"
+          percentageValue={calcPercentage(totals.digital, totals.meta)}
         />
       </div>
     </div>
@@ -71,8 +71,8 @@ const CardGroup = ({ totals, comparisonData, title = "Resumen de Métricas" }) =
   );
 
   return (
-    <CollapsibleSection 
-      title={title} 
+    <CollapsibleSection
+      title={title}
       subtitle="Monitoreo de Objetivos y Cumplimiento"
       iconColor="bg-blue-600"
     >
@@ -82,7 +82,7 @@ const CardGroup = ({ totals, comparisonData, title = "Resumen de Métricas" }) =
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-5 px-1">
             <div className="flex-1">
               <div className="w-40 md:w-48">
-                <Card label="META GLOBAL" value={totals.meta} type="meta" />
+                <Card label="METAS" value={totals.meta} type="meta" />
               </div>
             </div>
             <div className="shrink-0">
