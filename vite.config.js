@@ -7,5 +7,8 @@ export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
+    legacy({
+      targets: ['defaults', 'not IE 11']
+    })
   ],
 })
